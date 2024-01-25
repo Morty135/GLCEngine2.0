@@ -1,9 +1,14 @@
 #ifndef GLC_H
 #define GLC_H
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+//my parts
+#include <GLCShader.h>
 
 class GLC 
 {
