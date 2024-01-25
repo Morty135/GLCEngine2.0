@@ -11,6 +11,7 @@
 #include <GLCShader.h>
 #include <VAO.h>
 #include <VBO.h>
+#include <EBO.h>
 
 class GLC 
 {

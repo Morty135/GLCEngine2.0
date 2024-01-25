@@ -5,22 +5,33 @@ int width = 800;
 int height = 600;
 
 float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
-}; 
+     0.5f,  0.5f, 0.0f,  // top right
+     0.5f, -0.5f, 0.0f,  // bottom right
+    -0.5f, -0.5f, 0.0f,  // bottom left
+    -0.5f,  0.5f, 0.0f   // top left 
+};
+unsigned int indices[] = {  // note that we start from 0!
+    0, 1, 3,   // first triangle
+    1, 2, 3    // second triangle
+};  
 
 int main()
 {
     GLC GLC(width, height);
 
-    GLCShader defaultShader("shaders/default.vert", "shaders/default.frag");
+    GLCShader defaultShader("../shaders/default.vert", "../shaders/default.frag");
 
     VAO VAO1;
 	VAO1.Bind();
 
-	// Generates Vertex Buffer Object and links it to vertices
-	VBO VBO1(vertices, sizeof(vertices));
+	VBO VBO1(vertices);
+    EBO EBO1(indices);
+
+    VAO1.LinkAttrib(VBO1, 0);
+
+    VAO1.Unbind();
+	VBO1.Unbind();
+	EBO1.Unbind();
 
     while(!glfwWindowShouldClose(GLC.window))
     {
@@ -30,15 +41,16 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         defaultShader.Use();
-        glBindVertexArray(VAO1.ID);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        VAO1.Bind();
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();
     }
 
-    VAO1.Delete;
-    glDeleteBuffers(1, &VBO);
+    VAO1.Delete();
+    VBO1.Delete();
+    EBO1.Delete();
     defaultShader.Delete();
 
     glfwTerminate();
