@@ -1,4 +1,5 @@
 #include <GLC.h>
+#include <VAO.h>
 
 
 int width = 800;
@@ -21,13 +22,14 @@ int main()
 
     GLCShader defaultShader("shaders/default.vert", "shaders/default.frag");
 
-    unsigned int VBO, VAO, EBO;
-    glGenVertexArrays(1, &VAO);
+    unsigned int VBO, EBO;
+    
+    VAO VAO1;
+
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
 
-    glBindVertexArray(VAO);
-
+    VAO1.Bind();
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
@@ -49,7 +51,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         defaultShader.Use();
-        glBindVertexArray(VAO);
+        VAO1.Bind();
         
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -57,7 +59,7 @@ int main()
         glfwPollEvents();
     }
 
-    glDeleteVertexArrays(1, &VAO);
+    VAO1.Delete();
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     defaultShader.Delete();

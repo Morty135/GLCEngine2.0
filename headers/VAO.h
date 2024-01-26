@@ -2,8 +2,6 @@
 #define VAO_H
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include"VBO.h"
 
 class VAO
 {
@@ -13,8 +11,7 @@ public:
     VAO();
 
     void Bind();
-    void LinkAttrib(VBO& VBO, unsigned int layout);
-    void Unbind();
+
     void Delete();
 };
 

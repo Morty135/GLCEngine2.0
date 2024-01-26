@@ -9,9 +9,6 @@
 #include <GLFW/glfw3.h>
 //my parts
 #include <GLCShader.h>
-#include <VAO.h>
-#include <VBO.h>
-#include <EBO.h>
 
 class GLC 
 {
