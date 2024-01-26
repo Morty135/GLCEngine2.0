@@ -13,7 +13,7 @@ public:
     VAO();
 
     void Bind();
-    void VAO::LinkAttrib(VBO& VBO, unsigned int layout);
+    void LinkAttrib(VBO& VBO, unsigned int layout);
     void Unbind();
     void Delete();
 };
