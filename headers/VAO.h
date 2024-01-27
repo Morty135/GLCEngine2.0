@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 
+#include <VBO.h>
+
 class VAO
 {
 public:
@@ -10,7 +12,11 @@ public:
 
     VAO();
 
+    void LinkAttrib(VBO &VBO, unsigned int layout);
+
     void Bind();
+    
+    void Unbind();
 
     void Delete();
 };

@@ -1,5 +1,7 @@
 #include <GLC.h>
 #include <VAO.h>
+#include <VBO.h>
+#include <EBO.h>
 
 
 int width = 800;
@@ -20,28 +22,20 @@ int main()
 {
     GLC GLC(width, height);
 
-    GLCShader defaultShader("shaders/default.vert", "shaders/default.frag");
+    GLCShader defaultShader("../shaders/default.vert", "../shaders/default.frag");
 
-    unsigned int VBO, EBO;
-    
     VAO VAO1;
+	VAO1.Bind();
 
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
+	VBO VBO1(vertices, sizeof(vertices));
 
-    VAO1.Bind();
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	EBO EBO1(indices, sizeof(indices));
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	VAO1.LinkAttrib(VBO1, 0);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0); 
-
-    glBindVertexArray(0); 
+	VAO1.Unbind();
+	VBO1.Unbind();
+	EBO1.Unbind();
 
     while(!glfwWindowShouldClose(GLC.window))
     {
@@ -60,8 +54,8 @@ int main()
     }
 
     VAO1.Delete();
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+    VBO1.Delete();
+    EBO1.Delete();
     defaultShader.Delete();
 
     glfwTerminate();
