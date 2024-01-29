@@ -9,6 +9,7 @@ file(GLOB HEADERS "headers/*")
 
 add_subdirectory(include/glfw)
 add_subdirectory(include/glad)
+add_subdirectory(include/glm)
 
 add_executable("${CMAKE_PROJECT_NAME}" ${SOURCES} ${HEADERS})
 
@@ -20,4 +21,4 @@ file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/headers")
 
-target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE glfw glad)
+target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE glfw glad glm)

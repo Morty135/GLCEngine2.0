@@ -12,7 +12,7 @@ public:
 
     VAO();
 
-    void LinkAttrib(VBO &VBO, unsigned int layout);
+    void LinkAttrib(VBO &VBO, unsigned int layout, unsigned int lenght, GLenum type, GLsizeiptr stride, void* offset);
 
     void Bind();
     

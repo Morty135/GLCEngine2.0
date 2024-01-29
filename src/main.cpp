@@ -22,7 +22,9 @@ int main()
 {
     GLC GLC(width, height);
 
-    GLCShader defaultShader("../shaders/default.vert", "../shaders/default.frag");
+    GLCCamera MainCamera(GLC.window);
+
+    GLCShader defaultShader("shaders/default.vert", "shaders/default.frag");
 
     VAO VAO1;
 	VAO1.Bind();
@@ -31,7 +33,7 @@ int main()
 
 	EBO EBO1(indices, sizeof(indices));
 
-	VAO1.LinkAttrib(VBO1, 0);
+	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 0, (void*)0);
 
 	VAO1.Unbind();
 	VBO1.Unbind();

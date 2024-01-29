@@ -9,6 +9,7 @@
 #include <GLFW/glfw3.h>
 //my parts
 #include <GLCShader.h>
+#include <GLCCamera.h>
 
 class GLC 
 {
