@@ -47,8 +47,6 @@ int main()
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 projection = glm::mat4(1.0f);
 
-    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 
     while(!glfwWindowShouldClose(GLC.window))
     {
@@ -70,7 +68,7 @@ int main()
 
         view = MainCamera.view();
         projection = MainCamera.projection;
-        model = glm::rotate(model, glm::radians(-5.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        //model = glm::rotate(model, glm::radians(-1.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 
         int modelLoc = glGetUniformLocation(defaultShader.ID, "model");
