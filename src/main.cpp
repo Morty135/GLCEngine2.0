@@ -23,7 +23,7 @@ int main()
     GLC GLC(width, height);
 
     GLCCamera MainCamera(GLC.window);
-
+    MainCamera.projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
     GLCShader defaultShader("shaders/default.vert", "shaders/default.frag");
 
     VAO VAO1;
@@ -39,15 +39,48 @@ int main()
 	VBO1.Unbind();
 	EBO1.Unbind();
 
+
+    float deltaTime = 0.0f;
+    float lastFrame = 0.0f;
+
+    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 view = glm::mat4(1.0f);
+    glm::mat4 projection = glm::mat4(1.0f);
+
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+
     while(!glfwWindowShouldClose(GLC.window))
     {
+        float currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+        MainCamera.processInput(GLC.window, deltaTime);
+
+
         GLC.processInput();
 
+        
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         defaultShader.Use();
         VAO1.Bind();
+
+        view = MainCamera.view();
+        projection = MainCamera.projection;
+        model = glm::rotate(model, glm::radians(-5.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+
+        int modelLoc = glGetUniformLocation(defaultShader.ID, "model");
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        int viewLoc = glGetUniformLocation(defaultShader.ID, "view");
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        int projectionLoc = glGetUniformLocation(defaultShader.ID, "projection");
+        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
+
         
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
