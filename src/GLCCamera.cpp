@@ -26,7 +26,6 @@ GLCCamera::GLCCamera(GLFWwindow* window)
     front.y = sin(glm::radians(pitch));
     front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
     cameraFront = glm::normalize(front);
-    std::cout << cameraFront.x;
 }
 
 
@@ -48,9 +47,9 @@ void GLCCamera::processInput(GLFWwindow *window, float deltaTime)
         glfwSetWindowShouldClose(window, true);
     const float cameraSpeed = 3 * deltaTime; // adjust accordingly
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        cameraPos += cameraSpeed * glm::vec3(0.0f, 0.0f, -1.0f);
+        cameraPos += cameraSpeed * glm::vec3(0.0f, 1.0f, 0.0f);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * glm::vec3(0.0f, 0.0f, -1.0f);
+        cameraPos -= cameraSpeed * glm::vec3(0.0f, 1.0f, 0.0f);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         cameraPos -= glm::normalize(glm::cross(glm::vec3(0.0f, 0.0f, -1.0f), cameraUp)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
