@@ -37,14 +37,16 @@ glm::mat4 GLCCamera::view()
 
 
 
-
+float easeIn;
+float maxSpeed = 1.0f;
 //want to add lerp maybe a custom function
 void GLCCamera::processInput(GLFWwindow *window, float deltaTime)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
     const float cameraSpeed = 3 * deltaTime;
-    const float easingFactor = 0.1f;
+
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         cameraPos += cameraSpeed * glm::vec3(0.0f, 1.0f, 0.0f);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -52,5 +54,23 @@ void GLCCamera::processInput(GLFWwindow *window, float deltaTime)
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         cameraPos -= cameraSpeed * glm::vec3(1.0f, 0.0f, 0.0f);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPos += cameraSpeed * glm::vec3(1.0f, 0.0f, 0.0f);
+    {
+        if(easeIn >= maxSpeed)
+        {
+            easeIn = easeIn;
+        }
+        else
+        {
+            easeIn += 1.1f * deltaTime;
+            std::cout << easeIn;
+        }
+        cameraPos += cameraSpeed * glm::vec3(easeIn, 0.0f, 0.0f);
+    }
+    if (glfwGetKey(window, GLFW_KEY_W) != GLFW_PRESS &&
+    glfwGetKey(window, GLFW_KEY_S) != GLFW_PRESS &&
+    glfwGetKey(window, GLFW_KEY_A) != GLFW_PRESS &&
+    glfwGetKey(window, GLFW_KEY_D) != GLFW_PRESS)
+    {
+        easeIn = 0.0f;
+    }
 }
