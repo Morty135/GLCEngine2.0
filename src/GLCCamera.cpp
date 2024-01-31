@@ -4,8 +4,6 @@
 
 glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f, 1.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f, 0.0f);
-
 
 
 
@@ -34,24 +32,25 @@ GLCCamera::GLCCamera(GLFWwindow* window)
 
 glm::mat4 GLCCamera::view()
 {
-    return glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+    return glm::lookAt(cameraPos, cameraPos + cameraFront, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 
 
 
-
+//want to add lerp maybe a custom function
 void GLCCamera::processInput(GLFWwindow *window, float deltaTime)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    const float cameraSpeed = 3 * deltaTime; // adjust accordingly
+    const float cameraSpeed = 3 * deltaTime;
+    const float easingFactor = 0.1f;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         cameraPos += cameraSpeed * glm::vec3(0.0f, 1.0f, 0.0f);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
         cameraPos -= cameraSpeed * glm::vec3(0.0f, 1.0f, 0.0f);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPos -= glm::normalize(glm::cross(glm::vec3(0.0f, 0.0f, -1.0f), cameraUp)) * cameraSpeed;
+        cameraPos -= cameraSpeed * glm::vec3(1.0f, 0.0f, 0.0f);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPos += glm::normalize(glm::cross(glm::vec3(0.0f, 0.0f, -1.0f), cameraUp)) * cameraSpeed;
+        cameraPos += cameraSpeed * glm::vec3(1.0f, 0.0f, 0.0f);
 }

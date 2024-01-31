@@ -4,8 +4,8 @@
 #include <EBO.h>
 
 
-int width = 800;
-int height = 600;
+int width = 1000;
+int height = 700;
 
 float vertices[] = {
      0.5f,  0.5f, 0.0f,  // top right
@@ -24,7 +24,7 @@ int main()
 
     GLCCamera MainCamera(GLC.window);
     MainCamera.projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
-    GLCShader defaultShader("../shaders/default.vert", "../shaders/default.frag");
+    GLCShader defaultShader("shaders/default.vert", "shaders/default.frag");
 
     VAO VAO1;
 	VAO1.Bind();
@@ -46,6 +46,8 @@ int main()
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 projection = glm::mat4(1.0f);
+
+    glm::vec3 color = glm::vec3(1.0f);
 
     glViewport(0, 0, width, height);
     while(!glfwWindowShouldClose(GLC.window))
@@ -77,9 +79,10 @@ int main()
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
         int projectionLoc = glGetUniformLocation(defaultShader.ID, "projection");
         glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+        int colorLoc = glGetUniformLocation(defaultShader.ID, "color");
+        color = glm::vec3(sin(glfwGetTime())/2.0f + 0.5f,sin(glfwGetTime())/3.0f + 0.7f,sin(glfwGetTime())/5.0f + 0.3f);
+        glUniform3f(colorLoc, color.x, color.y ,color.z);
 
-
-        
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(GLC.window);
