@@ -5,8 +5,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <vector>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -14,6 +13,7 @@
 //my parts
 #include <GLCShader.h>
 #include <GLCCamera.h>
+#include <GLCMesh.h>
 
 class GLC 
 {
