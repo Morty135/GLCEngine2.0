@@ -37,40 +37,122 @@ glm::mat4 GLCCamera::view()
 
 
 
-float easeIn;
-float maxSpeed = 1.0f;
+float InterpolateXUp;
+float InterpolateXDown;
+float InterpolateYLeft;
+float InterpolateYRight;
+float maxValue = 1.0f;
+float InterpolationSpeed = 3.5f;
 //want to add lerp maybe a custom function
 void GLCCamera::processInput(GLFWwindow *window, float deltaTime)
 {
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+    const float cameraSpeed = 2 * deltaTime;
 
-    const float cameraSpeed = 3 * deltaTime;
+
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        cameraPos += cameraSpeed * glm::vec3(0.0f, 1.0f, 0.0f);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * glm::vec3(0.0f, 1.0f, 0.0f);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * glm::vec3(1.0f, 0.0f, 0.0f);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-    {
-        if(easeIn >= maxSpeed)
         {
-            easeIn = easeIn;
+        if(InterpolateXUp >= maxValue)
+        {
+            InterpolateXUp = InterpolateXUp;
         }
         else
         {
-            easeIn += 1.1f * deltaTime;
-            std::cout << easeIn;
+            InterpolateXUp += InterpolationSpeed * deltaTime;
         }
-        cameraPos += cameraSpeed * glm::vec3(easeIn, 0.0f, 0.0f);
+        cameraPos += cameraSpeed * glm::vec3(0.0f, InterpolateXUp, 0.0f);
     }
-    if (glfwGetKey(window, GLFW_KEY_W) != GLFW_PRESS &&
-    glfwGetKey(window, GLFW_KEY_S) != GLFW_PRESS &&
-    glfwGetKey(window, GLFW_KEY_A) != GLFW_PRESS &&
-    glfwGetKey(window, GLFW_KEY_D) != GLFW_PRESS)
+    else
     {
-        easeIn = 0.0f;
+        if(InterpolateXUp <= 0.0f)
+        {
+            InterpolateXUp = InterpolateXUp;
+        }
+        else
+        {
+            InterpolateXUp -= InterpolationSpeed * deltaTime;
+        }
+        cameraPos += cameraSpeed * glm::vec3(0.0f, InterpolateXUp, 0.0f);
+    }
+
+
+
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+        if(InterpolateXDown >= maxValue)
+        {
+            InterpolateXDown = InterpolateXDown;
+        }
+        else
+        {
+            InterpolateXDown += InterpolationSpeed * deltaTime;
+        }
+        cameraPos -= cameraSpeed * glm::vec3(0.0f, InterpolateXDown, 0.0f);
+    }
+    else
+    {
+        if(InterpolateXDown <= 0.0f)
+        {
+            InterpolateXDown = InterpolateXDown;
+        }
+        else
+        {
+            InterpolateXDown -= InterpolationSpeed * deltaTime;
+        }
+        cameraPos -= cameraSpeed * glm::vec3(0.0f, InterpolateXDown, 0.0f);
+    }
+
+
+
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
+        if(InterpolateYLeft >= maxValue)
+        {
+            InterpolateYLeft = InterpolateYLeft;
+        }
+        else
+        {
+            InterpolateYLeft += InterpolationSpeed * deltaTime;
+        }
+        cameraPos -= cameraSpeed * glm::vec3(InterpolateYLeft, 0.0f, 0.0f);
+    }
+    else
+    {
+        if(InterpolateYLeft <= 0.0f)
+        {
+            InterpolateYRight = InterpolateYRight;
+        }
+        else
+        {
+            InterpolateYLeft -= InterpolationSpeed * deltaTime;
+        }
+        cameraPos -= cameraSpeed * glm::vec3(InterpolateYLeft, 0.0f, 0.0f);
+    }
+
+
+
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    {
+        if(InterpolateYRight >= maxValue)
+        {
+            InterpolateYRight = InterpolateYRight;
+        }
+        else
+        {
+            InterpolateYRight += InterpolationSpeed * deltaTime;
+        }
+        cameraPos += cameraSpeed * glm::vec3(InterpolateYRight, 0.0f, 0.0f);
+    }
+    else
+    {
+        if(InterpolateYRight <= 0.0f)
+        {
+            InterpolateYRight = InterpolateYRight;
+        }
+        else
+        {
+            InterpolateYRight -= InterpolationSpeed * deltaTime;
+        }
+        cameraPos += cameraSpeed * glm::vec3(InterpolateYRight, 0.0f, 0.0f);
     }
 }
