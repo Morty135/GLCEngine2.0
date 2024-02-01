@@ -1,7 +1,4 @@
 #include <GLC.h>
-#include <VAO.h>
-#include <VBO.h>
-#include <EBO.h>
 
 
 int width = 1280;
@@ -24,7 +21,7 @@ int main()
 
     GLCCamera MainCamera(GLC.window);
     MainCamera.projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
-    GLCShader defaultShader("../shaders/default.vert", "../shaders/default.frag");
+    GLCShader defaultShader("shaders/default.vert", "shaders/default.frag");
 
     std::vector <vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(vertex));
 	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
