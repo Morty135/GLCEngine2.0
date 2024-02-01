@@ -14,6 +14,7 @@
 #include <GLCShader.h>
 #include <GLCCamera.h>
 #include <GLCMesh.h>
+#include <GLCInput.h>
 
 class GLC 
 {

@@ -9,14 +9,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <GLCInput.h>
+
 class GLCCamera
 {
 public:
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 1.0f);
+    glm::vec3 position = glm::vec3(0.0f, 0.0f, 1.0f);
 
     GLCCamera(GLFWwindow* window);
-
-    void processInput(GLFWwindow *window, float deltaTime);
 
     glm::mat4 view();
 

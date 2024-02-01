@@ -19,8 +19,12 @@ int main()
 {
     GLC GLC(width, height);
 
+    GLCInput GLCInput(GLC.window);
+
     GLCCamera MainCamera(GLC.window);
+
     MainCamera.projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
+
     GLCShader defaultShader("shaders/default.vert", "shaders/default.frag");
 
     std::vector <vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(vertex));
@@ -41,11 +45,9 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        MainCamera.processInput(GLC.window, deltaTime);
+        MainCamera.position += GLCInput.Combined() * deltaTime;
 
-
-        GLC.processInput();
-
+        GLCInput.processInput();
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

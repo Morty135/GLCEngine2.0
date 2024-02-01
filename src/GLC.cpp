@@ -34,11 +34,3 @@ GLC::GLC(int Width, int Height)
 
     glViewport(0, 0, width, height);
 }
-
-
-
-void GLC::processInput()
-{
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
