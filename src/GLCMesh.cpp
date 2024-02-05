@@ -1,9 +1,10 @@
 #include <GLCMesh.h>
 
-GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices)
+GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTexture>& textures)
 {
     GLCMesh::vertices = vertices;
     GLCMesh::indices = indices;
+    GLCMesh::textures = textures;
 
 
 
@@ -33,6 +34,25 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera)
 {
     shader.Use();
     VAO.Bind();
+
+    unsigned int numDiffuse = 0;
+	unsigned int numSpecular = 0;
+
+    for (unsigned int i = 0; i < textures.size(); i++)
+	{
+		std::string num;
+		std::string type = textures[i].type;
+		if (type == "diffuse")
+		{
+			num = std::to_string(numDiffuse++);
+		}
+		else if (type == "specular")
+		{
+			num = std::to_string(numSpecular++);
+		}
+		textures[i].texUnit(shader, (type + num).c_str(), i);
+		textures[i].Bind();
+	}
     
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = camera.view();

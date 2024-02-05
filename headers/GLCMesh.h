@@ -15,16 +15,18 @@
 #include <EBO.h>
 #include <GLCCamera.h>
 #include <GLCShader.h>
+#include <GLCTexture.h>
 
 class GLCMesh
 {
     public:
         std::vector <vertex> vertices;
         std::vector <unsigned int> indices;
+        std::vector <GLCTexture> textures;
 
 	    VAO VAO;
 
-	    GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices);
+	    GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTexture>& textures);
 
 	    void Draw(GLCShader& shader, GLCCamera& camera);
 };

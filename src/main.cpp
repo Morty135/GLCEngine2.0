@@ -32,7 +32,7 @@ int main()
     std::vector <vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(vertex));
 	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
 
-    GLCMesh Plane(verts, ind);
+    GLCMesh Plane(verts, ind, );
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
