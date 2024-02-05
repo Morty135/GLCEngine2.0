@@ -5,14 +5,14 @@ int width = 1280;
 int height = 800;
 
 vertex vertices[] = {
-    vertex{glm::vec3(0.5f,  0.5f, 0.0f)},  // top right
-    vertex{glm::vec3( 0.5f, -0.5f, 0.0f)},  // bottom right
-    vertex{glm::vec3(-0.5f, -0.5f, 0.0f)},  // bottom left
-    vertex{glm::vec3(-0.5f,  0.5f, 0.0f)}   // top left 
+    vertex{glm::vec3(-1.0f, 1.0f,  0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.7f, 0.2f), glm::vec2(0.0f, 0.0f)},
+	vertex{glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.2f, 0.7f), glm::vec2(0.0f, 1.0f)},
+	vertex{glm::vec3( 1.0f, -1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.2f, 0.7f, 1.0f), glm::vec2(1.0f, 1.0f)},
+	vertex{glm::vec3( 1.0f, 1.0f,  0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.7f, 0.2f, 1.0f), glm::vec2(1.0f, 0.0f)}
 };
 unsigned int indices[] = {  // note that we start from 0!
-    0, 1, 3,   // first triangle
-    1, 2, 3    // second triangle
+    0, 1, 2,
+	0, 2, 3
 };  
 
 int main()
