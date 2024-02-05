@@ -13,7 +13,9 @@ vertex vertices[] = {
 unsigned int indices[] = {  // note that we start from 0!
     0, 1, 2,
 	0, 2, 3
-};  
+};
+
+std::string ParentDir = (std::filesystem::current_path().std::filesystem::path::parent_path()).string();
 
 int main()
 {
@@ -25,7 +27,7 @@ int main()
 
     MainCamera.projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
 
-    GLCShader defaultShader("shaders/default.vert", "shaders/default.frag");
+    GLCShader defaultShader((ParentDir + "/shaders/default.vert").c_str(), (ParentDir + "/shaders/default.frag").c_str());
 
     std::vector <vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(vertex));
 	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));

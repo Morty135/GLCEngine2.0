@@ -13,12 +13,6 @@ add_subdirectory(include/glm)
 
 add_executable("${CMAKE_PROJECT_NAME}" ${SOURCES} ${HEADERS})
 
-file(REMOVE_RECURSE ${CMAKE_BINARY_DIR}/resources)
-file(REMOVE_RECURSE ${CMAKE_BINARY_DIR}/shaders)
-
-file(COPY ${CMAKE_SOURCE_DIR}/shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
 target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/headers")
 
 target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE glfw glad glm)
