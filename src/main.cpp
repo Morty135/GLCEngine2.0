@@ -29,6 +29,14 @@ int main()
 
     GLCShader defaultShader((ParentDir + "/shaders/default.vert").c_str(), (ParentDir + "/shaders/default.frag").c_str());
 
+
+    GLCTexture textures[]
+	{
+		GLCTexture((ParentDir + "/resources/plankTexture/planks.png").c_str(), "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
+		GLCTexture((ParentDir + "/resources/plankTexture/planksSpec.png").c_str(), "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
+	};
+
+
     std::vector <vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(vertex));
 	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
     std::vector <GLCTexture> tex(textures, textures + sizeof(textures) / sizeof(GLCTexture));

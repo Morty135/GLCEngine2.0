@@ -26,10 +26,6 @@ GLCTexture::GLCTexture(const char* textureSource, const char* texType, unsigned 
     stbi_image_free(data);
 }
 
-void GLCTexture::Bind()
-{
-    glBindTexture(GL_TEXTURE_2D, ID);
-}
 void GLCTexture::texUnit(GLCShader& shader, const char* uniform, unsigned int unit)
 {
 	// Gets the location of the uniform
