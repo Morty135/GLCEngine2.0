@@ -1,6 +1,6 @@
 #include <GLCTexture.h>
 
-GLCTexture::GLCTexture(const char* textureSource)
+GLCTexture::GLCTexture(const char* textureSource, const char* texType, unsigned int slot, GLenum format, GLenum pixelType)
 {
     glGenTextures(1, &ID);
     glBindTexture(GL_TEXTURE_2D, ID);
@@ -16,6 +16,7 @@ GLCTexture::GLCTexture(const char* textureSource)
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, pixelType, data);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
@@ -28,4 +29,29 @@ GLCTexture::GLCTexture(const char* textureSource)
 void GLCTexture::Bind()
 {
     glBindTexture(GL_TEXTURE_2D, ID);
+}
+void GLCTexture::texUnit(GLCShader& shader, const char* uniform, unsigned int unit)
+{
+	// Gets the location of the uniform
+	unsigned int texUni = glGetUniformLocation(shader.ID, uniform);
+	// Shader needs to be activated before changing the value of a uniform
+	shader.Use();
+	// Sets the value of the uniform
+	glUniform1i(texUni, unit);
+}
+
+void GLCTexture::Bind()
+{
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_2D, ID);
+}
+
+void GLCTexture::Unbind()
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void GLCTexture::Delete()
+{
+	glDeleteTextures(1, &ID);
 }

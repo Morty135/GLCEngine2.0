@@ -31,8 +31,9 @@ int main()
 
     std::vector <vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(vertex));
 	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
+    std::vector <GLCTexture> tex(textures, textures + sizeof(textures) / sizeof(GLCTexture));
 
-    GLCMesh Plane(verts, ind, );
+    GLCMesh Plane(verts, ind, tex);
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
