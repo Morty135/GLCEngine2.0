@@ -38,7 +38,7 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera)
     unsigned int numDiffuse = 0;
 	unsigned int numSpecular = 0;
 
-	std::cout << textures.size();
+
 
     for (unsigned int i = 0; i < textures.size(); i++)
 	{
