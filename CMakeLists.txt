@@ -10,12 +10,13 @@ file(GLOB HEADERS "headers/*")
 add_subdirectory(include/glfw)
 add_subdirectory(include/glad)
 add_subdirectory(include/glm)
+add_subdirectory(include/assimp)
 
 add_executable("${CMAKE_PROJECT_NAME}" ${SOURCES} ${HEADERS})
 
 target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/headers")
 
-target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE glfw glad glm)
+target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE glfw glad glm assimp)
 
 #Solves the class conflict allows to compile 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
