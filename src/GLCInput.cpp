@@ -6,6 +6,8 @@ GLCInput::GLCInput(GLFWwindow* Window)
 }
 
 
+float maxSpeed = 2.0f;
+float acceleration = 0.05f;
 
 float horizontalInput = 0.0f;
 float verticalInput = 0.0f;
@@ -16,28 +18,66 @@ void GLCInput::processInput()
 {   
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     {
-        horizontalInput = 1.0f;
+        if(horizontalInput < maxSpeed)
+        {
+            horizontalInput += acceleration;
+        }
     }
     else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
-        horizontalInput = -1.0f;
+        if(horizontalInput > -maxSpeed)
+        {
+            horizontalInput -= acceleration;
+        }
     }
     else
     {
-        horizontalInput = 0.0f;
+        if(horizontalInput > 0)
+        {
+            horizontalInput -= acceleration;
+        }
+        else if(horizontalInput < 0)
+        {
+            horizontalInput += acceleration;
+        }
+        else
+        {
+            horizontalInput = 0;
+        }
     }
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
-        verticalInput = 1.0f;
+        if(verticalInput < maxSpeed)
+        {
+            verticalInput += acceleration;
+        }
     }
     else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
     {
-        verticalInput = -1.0f;
+        if(verticalInput > -maxSpeed)
+        {
+            verticalInput -= acceleration;
+        }
     }
     else
     {
-        verticalInput = 0.0f;
+        if(verticalInput > 0)
+        {
+            verticalInput -= acceleration;
+        }
+        else if(verticalInput < 0)
+        {
+            verticalInput += acceleration;
+        }
+    }
+    if(verticalInput < acceleration && verticalInput > -acceleration)
+    {
+        verticalInput = 0;
+    }
+    if(horizontalInput < acceleration && horizontalInput > -acceleration)
+    {
+        horizontalInput = 0;
     }
 
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)

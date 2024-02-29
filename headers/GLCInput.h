@@ -21,7 +21,6 @@ public:
 
     void processInput();
 
-
     float Horizontal();
     float Vertical();
     glm::vec3 Combined();
