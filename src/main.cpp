@@ -4,11 +4,14 @@
 int width = 1280;
 int height = 800;
 
+float size = 4.0f;
+float textureRepeat = 4.0f; 
+
 vertex vertices[] = {
-    vertex{glm::vec3(-1.0f, 1.0f,  0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f)},
-	vertex{glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 1.0f)},
-	vertex{glm::vec3( 1.0f, -1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(1.0f, 1.0f)},
-	vertex{glm::vec3( 1.0f, 1.0f,  0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(1.0f, 0.0f)}
+    vertex{glm::vec3(-1.0f, 1.0f,  0.0f) * size , glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f) * textureRepeat},
+	vertex{glm::vec3(-1.0f, -1.0f, 0.0f) * size , glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 1.0f) * textureRepeat},
+	vertex{glm::vec3( 1.0f, -1.0f, 0.0f) * size , glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(1.0f, 1.0f) * textureRepeat},
+	vertex{glm::vec3( 1.0f, 1.0f,  0.0f) * size , glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(1.0f, 0.0f) * textureRepeat}
 };
 unsigned int indices[] = {  // note that we start from 0!
     0, 1, 2,

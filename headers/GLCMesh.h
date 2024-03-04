@@ -17,6 +17,8 @@
 #include <GLCShader.h>
 #include <GLCTexture.h>
 
+
+
 class GLCMesh
 {
     public:
