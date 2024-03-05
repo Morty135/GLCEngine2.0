@@ -12,8 +12,24 @@ void loadModel(std::string path)
         std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
         return;
     }
-    //directory = path.substr(0, path.find_last_of('/'));
+    directory = path.substr(0, path.find_last_of('/'));
 
-    //processNode(scene->mRootNode, scene);
+    processNode(scene->mRootNode, scene);
+}
+
+
+
+void processNode(aiNode *node, const aiScene *scene)
+{
+    // process all the node's meshes (if any)
+    for(unsigned int i = 0; i < node->mNumMeshes; i++)
+    {
+        aiMesh *mesh = scene->mMeshes[node->mMeshes[i]]; 
+        meshes.push_back(processMesh(mesh, scene));			
+    }
+    // then do the same for each of its children
+    for(unsigned int i = 0; i < node->mNumChildren; i++)
+    {
+        processNode(node->mChildren[i], scene);
+    }
 }  
-
