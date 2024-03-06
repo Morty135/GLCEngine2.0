@@ -2,7 +2,7 @@
 
 
 
-void loadModel(std::string path)
+void GLCModel::loadModel(std::string path)
 {
     Assimp::Importer import;
     const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);	
@@ -19,7 +19,7 @@ void loadModel(std::string path)
 
 
 
-void processNode(aiNode *node, const aiScene *scene)
+void GLCModel::processNode(aiNode *node, const aiScene *scene)
 {
     // process all the node's meshes (if any)
     for(unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -32,4 +32,27 @@ void processNode(aiNode *node, const aiScene *scene)
     {
         processNode(node->mChildren[i], scene);
     }
+}
+
+
+
+GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
+{
+    std::vector<vertex> vertices;
+    std::vector<unsigned int> indices;
+    std::vector<GLCTexture> textures;
+
+
+
+    for(unsigned int i = 0; i < mesh->mNumVertices; i++)
+    {
+        vertex vertex;
+        vertices.push_back(vertex);
+    }
+    if(mesh->mMaterialIndex >= 0)
+    {
+
+    }
+
+    return GLCMesh(vertices, indices, textures);
 }  
