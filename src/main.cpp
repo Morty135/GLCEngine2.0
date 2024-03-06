@@ -45,6 +45,8 @@ int main()
 
     GLCMesh Plane(verts, ind, tex);
 
+    GLCModel Character((ParentDir + "/resources/character/character.obj").c_str());
+
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
 
@@ -67,7 +69,8 @@ int main()
 
         defaultShader.Use();
 
-        Plane.Draw(defaultShader, MainCamera);
+        //Plane.Draw(defaultShader, MainCamera);
+        Character.Draw(defaultShader, MainCamera);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();

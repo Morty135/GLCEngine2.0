@@ -27,7 +27,7 @@ class GLCModel
         {
             loadModel(path);
         }
-        void Draw(GLCShader &shader);	
+        void Draw(GLCShader &shader, GLCCamera& camera);	
     private:
 
         std::vector<GLCMesh> meshes;
@@ -37,11 +37,6 @@ class GLCModel
         void processNode(aiNode *node, const aiScene *scene);
         GLCMesh processMesh(aiMesh *mesh, const aiScene *scene);
 
-        void Draw(GLCShader &shader,GLCCamera& camera)
-        {
-            for(unsigned int i = 0; i < meshes.size(); i++)
-                meshes[i].Draw(shader, camera);
-        }  
         std::vector<GLCTexture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 };
 

@@ -47,6 +47,11 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
     for(unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
         vertex vertex;
+        glm::vec3 vector; 
+        vector.x = mesh->mVertices[i].x;
+        vector.y = mesh->mVertices[i].y;
+        vector.z = mesh->mVertices[i].z; 
+        vertex.position = vector;
         vertices.push_back(vertex);
     }
     if(mesh->mMaterialIndex >= 0)
@@ -55,4 +60,12 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
     }
 
     return GLCMesh(vertices, indices, textures);
+}
+
+
+
+void GLCModel::Draw(GLCShader &shader,GLCCamera& camera)
+{
+    for(unsigned int i = 0; i < meshes.size(); i++)
+        meshes[i].Draw(shader, camera);
 }  
