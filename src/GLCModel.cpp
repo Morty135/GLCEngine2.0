@@ -1,5 +1,5 @@
 #include <GLCModel.h>
-
+#include <stb_image.h>
 
 
 void GLCModel::loadModel(std::string path)
@@ -52,15 +52,64 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
         vector.y = mesh->mVertices[i].y;
         vector.z = mesh->mVertices[i].z; 
         vertex.position = vector;
+
+        vector.x = mesh->mNormals[i].x;
+        vector.y = mesh->mNormals[i].y;
+        vector.z = mesh->mNormals[i].z;
+        vertex.normal = vector;  
+
+        if(mesh->mTextureCoords[0])
+        {
+            glm::vec2 vec;
+            vec.x = mesh->mTextureCoords[0][i].x; 
+            vec.y = mesh->mTextureCoords[0][i].y;
+            vertex.texture = vec;
+        }
+        else
+        {
+            vertex.texture = glm::vec2(0.0f, 0.0f);  
+        }
+
         vertices.push_back(vertex);
     }
+
+
+
+    for(unsigned int i = 0; i < mesh->mNumFaces; i++)
+    {
+        aiFace face = mesh->mFaces[i];
+        for(unsigned int j = 0; j < face.mNumIndices; j++)
+            indices.push_back(face.mIndices[j]);
+    }  
+
     if(mesh->mMaterialIndex >= 0)
     {
+        aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+        std::vector<GLCTexture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+        std::vector<GLCTexture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+    }  
 
-    }
+    
 
     return GLCMesh(vertices, indices, textures);
 }
+
+
+
+std::vector<GLCTexture> GLCModel::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+{
+    std::vector<GLCTexture> textures;
+    for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+    {
+        aiString str;
+        mat->GetTexture(type, i, &str);
+        GLCTexture texture((directory + "/planks.png").c_str(), "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE);
+        textures.push_back(texture);
+    }
+    return textures;
+}  
 
 
 
