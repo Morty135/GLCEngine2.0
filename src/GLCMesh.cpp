@@ -7,7 +7,6 @@ GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& ind
     GLCMesh::textures = textures;
 
 
-
     VAO.Bind();
 
 	VBO VBO(vertices);
@@ -66,6 +65,6 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera)
     int projectionLoc = glGetUniformLocation(shader.ID, "projection");
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
 }

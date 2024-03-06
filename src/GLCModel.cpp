@@ -96,7 +96,13 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
     return GLCMesh(vertices, indices, textures);
 }
 
-
+/*
+GLCTexture textures[]
+{
+    GLCTexture((ParentDir + "/resources/plankTexture/planks.png").c_str(), "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
+    GLCTexture((ParentDir + "/resources/plankTexture/planksSpec.png").c_str(), "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
+};
+*/
 
 std::vector<GLCTexture> GLCModel::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
 {
@@ -105,8 +111,7 @@ std::vector<GLCTexture> GLCModel::loadMaterialTextures(aiMaterial *mat, aiTextur
     {
         aiString str;
         mat->GetTexture(type, i, &str);
-        GLCTexture texture((directory + "/planks.png").c_str(), "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE);
-        textures.push_back(texture);
+        GLCTexture texture();
     }
     return textures;
 }  
