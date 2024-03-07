@@ -82,19 +82,15 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
             indices.push_back(face.mIndices[j]);
     }  
 
-    if(mesh->mMaterialIndex >= 0)
-    {
-        aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-        std::vector<GLCTexture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        std::vector<GLCTexture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-    }  
 
-    
+    //textures here
 
     return GLCMesh(vertices, indices, textures);
 }
+
+
+
+
 
 /*
 GLCTexture textures[]
@@ -103,18 +99,6 @@ GLCTexture textures[]
     GLCTexture((ParentDir + "/resources/plankTexture/planksSpec.png").c_str(), "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
 };
 */
-
-std::vector<GLCTexture> GLCModel::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
-{
-    std::vector<GLCTexture> textures;
-    for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
-    {
-        aiString str;
-        mat->GetTexture(type, i, &str);
-        GLCTexture texture();
-    }
-    return textures;
-}  
 
 
 
