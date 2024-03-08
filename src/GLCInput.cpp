@@ -113,5 +113,12 @@ glm::vec3 GLCInput::Combined()
     {
         combinedInput = glm::vec3(horizontalInput, verticalInput, 0.0f);
     }
-    return combinedInput;
+    if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+    {
+        return combinedInput * 4.0f;
+    }
+    else
+    {
+        return combinedInput;
+    }
 }

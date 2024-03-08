@@ -19,13 +19,9 @@ int main()
 
     GLCShader defaultShader((ParentDir + "/shaders/default.vert").c_str(), (ParentDir + "/shaders/default.frag").c_str());
 
-    GLCTexture textures[]
-	{
-		GLCTexture((ParentDir + "/resources/plankTexture/planks.png").c_str(), "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
-		GLCTexture((ParentDir + "/resources/plankTexture/planksSpec.png").c_str(), "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
-	};
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str());
+    GLCModel Car((ParentDir + "/resources/Audi/Audi R8.fbx").c_str());
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
@@ -52,7 +48,8 @@ int main()
 
         defaultShader.Use();
 
-        Character.Draw(defaultShader, MainCamera);
+        //Character.Draw(defaultShader, MainCamera);
+        Car.Draw(defaultShader, MainCamera);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();

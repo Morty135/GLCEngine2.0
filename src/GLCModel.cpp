@@ -84,11 +84,45 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
 
 
     //textures here
+    if(mesh->mMaterialIndex >= 0)
+    {
+        aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+        std::vector<GLCTexture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse");
+        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+
+        std::vector<GLCTexture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "specular");
+
+        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+    }  
 
     return GLCMesh(vertices, indices, textures);
 }
 
 
+
+std::vector<GLCTexture> GLCModel::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+{
+    std::vector<GLCTexture> textures;
+    for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+    {
+        aiString str;
+        mat->GetTexture(type, i, &str);
+        std::string fullPath = directory + '/' + str.C_Str();
+
+        GLenum colorCH;
+        if(typeName == "specular")
+        {
+            colorCH = GL_RED;
+        }
+        if(typeName == "diffuse")
+        {
+            colorCH = GL_RGBA;
+        }
+        GLCTexture texture(fullPath.c_str(), typeName.c_str(), i, colorCH, GL_UNSIGNED_BYTE);
+        textures.push_back(texture);
+    }
+    return textures;
+}  
 
 
 
@@ -106,4 +140,4 @@ void GLCModel::Draw(GLCShader &shader,GLCCamera& camera)
 {
     for(unsigned int i = 0; i < meshes.size(); i++)
         meshes[i].Draw(shader, camera);
-}  
+}
