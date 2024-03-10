@@ -20,22 +20,23 @@
 #include <assimp/postprocess.h>
 
 
+unsigned int TextureFromFile(const char *path, const std::string &directory);
+
 
 class GLCModel 
 {
     public:
-        GLCModel(char *path)
+        std::vector<GLCMesh> meshes;
+        std::string directory;
+        std::vector<GLCTextureStruct> textures_loaded;
+
+        GLCModel(std::string const &path)
         {
             loadModel(path);
         }
         void Draw(GLCShader &shader, GLCCamera& camera);	
     private:
-
-        std::vector<GLCMesh> meshes;
-        std::string directory;
-        std::vector<GLCTextureStruct> textures_loaded;
-
-        void loadModel(std::string path);
+        void loadModel(std::string const &path);
         void processNode(aiNode *node, const aiScene *scene);
         GLCMesh processMesh(aiMesh *mesh, const aiScene *scene);
 

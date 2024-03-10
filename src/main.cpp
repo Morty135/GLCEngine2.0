@@ -21,6 +21,7 @@ int main()
 
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str());
+    GLCModel Backpack((ParentDir + "/resources/Floor/Floor.obj").c_str());
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
@@ -30,7 +31,7 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     //camera pos adjustment
-    MainCamera.position += glm::vec3(0.0f,-7.0f,10.0f);
+    MainCamera.position += glm::vec3(0.0f,-7.0f,5.0f);
 
     while(!glfwWindowShouldClose(GLC.window))
     {
@@ -48,6 +49,7 @@ int main()
         defaultShader.Use();
 
         Character.Draw(defaultShader, MainCamera);
+        Backpack.Draw(defaultShader, MainCamera);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();

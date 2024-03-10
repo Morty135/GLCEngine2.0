@@ -3,7 +3,7 @@
 #include <GLCModel.h>
 
 
-void GLCModel::loadModel(std::string path)
+void GLCModel::loadModel(std::string const &path)
 {
     Assimp::Importer import;
     const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);	
@@ -14,6 +14,7 @@ void GLCModel::loadModel(std::string path)
         return;
     }
     directory = path.substr(0, path.find_last_of('/'));
+    std::cout << directory;
 
     processNode(scene->mRootNode, scene);
 }
@@ -70,7 +71,6 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
         {
             vertex.texture = glm::vec2(0.0f, 0.0f);  
         }
-
         vertices.push_back(vertex);
     }
 
@@ -80,21 +80,18 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
     {
         aiFace face = mesh->mFaces[i];
         for(unsigned int j = 0; j < face.mNumIndices; j++)
-            indices.push_back(face.mIndices[j]);
+        indices.push_back(face.mIndices[j]);
     }  
 
 
     //textures here
-    if(mesh->mMaterialIndex >= 0)
-    {
-        aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-        std::vector<GLCTextureStruct> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse");
-        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-
-        std::vector<GLCTextureStruct> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "specular");
-
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-    }  
+    aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];    
+    // 1. diffuse maps
+    std::vector<GLCTextureStruct> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+    textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+    // 2. specular maps
+    std::vector<GLCTextureStruct> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+    textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
     return GLCMesh(vertices, indices, textures);
 }
@@ -120,7 +117,7 @@ std::vector<GLCTextureStruct> GLCModel::loadMaterialTextures(aiMaterial *mat, ai
             }
         }
         if(!skip)
-        {   // if texture hasn't been loaded already, load it
+        {   
             GLCTextureStruct texture;
             texture.id = TextureFromFile(str.C_Str(), this->directory);
             texture.type = typeName;
@@ -173,15 +170,6 @@ unsigned int GLCModel::TextureFromFile(const char *path, const std::string &dire
 
     return textureID;
 }
-
-
-/*
-GLCTexture textures[]
-{
-    GLCTexture((ParentDir + "/resources/plankTexture/planks.png").c_str(), "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
-    GLCTexture((ParentDir + "/resources/plankTexture/planksSpec.png").c_str(), "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
-};
-*/
 
 
 
