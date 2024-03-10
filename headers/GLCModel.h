@@ -30,6 +30,8 @@ class GLCModel
         std::string directory;
         std::vector<GLCTextureStruct> textures_loaded;
 
+        glm::mat4 Transform = glm::mat4(1.0f);
+
         GLCModel(std::string const &path)
         {
             loadModel(path);

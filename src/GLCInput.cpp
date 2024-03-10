@@ -107,11 +107,11 @@ glm::vec3 GLCInput::Combined()
     glm::vec3 combinedInput = glm::vec3(0.0f, 0.0f, 0.0f);
     if(horizontalInput != 0.0f && verticalInput != 0.0f)
     {
-        combinedInput = glm::vec3(horizontalInput * 0.7071f, verticalInput * 0.7071f, 0.0f);
+        combinedInput = glm::vec3(horizontalInput * 0.7071f, 0.0f, -verticalInput * 0.7071f);
     }
     else
     {
-        combinedInput = glm::vec3(horizontalInput, verticalInput, 0.0f);
+        combinedInput = glm::vec3(horizontalInput, 0.0f, -verticalInput);
     }
     if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
     {

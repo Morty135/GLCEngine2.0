@@ -33,6 +33,8 @@ class GLCMesh
         std::vector <unsigned int> indices;
         std::vector <GLCTextureStruct> textures;
 
+        glm::mat4 Transform = glm::mat4(1.0f);
+
 	    VAO VAO;
 
 	    GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures);

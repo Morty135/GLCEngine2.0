@@ -51,6 +51,7 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera)
 	}
     
     glm::mat4 model = glm::mat4(1.0f);
+	model = Transform;
     glm::mat4 view = camera.view();
     glm::mat4 projection = camera.projection;
 
