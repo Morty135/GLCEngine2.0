@@ -1,6 +1,6 @@
 #include <GLCMesh.h>
 
-GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTexture>& textures)
+GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures)
 {
     GLCMesh::vertices = vertices;
     GLCMesh::indices = indices;
@@ -50,8 +50,7 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera)
 		{
 			num = std::to_string(numSpecular++);
 		}
-		textures[i].texUnit(shader, (type + num).c_str(), i);
-		textures[i].Bind();
+		glBindTexture(GL_TEXTURE_2D, textures[i].id);
 	}
     
     glm::mat4 model = glm::mat4(1.0f);

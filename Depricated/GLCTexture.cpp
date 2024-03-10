@@ -2,11 +2,8 @@
 #include "stb_image.h"
 #include <GLCTexture.h>
 
-GLCTexture::GLCTexture(const char* textureSource, const char* texType, unsigned int slot, GLenum format, GLenum pixelType)
+GLCTexture::GLCTexture(GLCTextureStruct TextureStruct)
 {
-    // Assigns the type of the texture ot the texture object
-	type = texType;
-
 	// Stores the width, height, and the number of color channels of the image
 	int widthImg, heightImg, numColCh;
 	// Flips the image so it appears right side up

@@ -15,7 +15,14 @@
 #include <EBO.h>
 #include <GLCCamera.h>
 #include <GLCShader.h>
-#include <GLCTexture.h>
+
+
+
+struct GLCTextureStruct {
+    unsigned int id;
+    std::string type;
+    std::string path;
+};
 
 
 
@@ -24,11 +31,11 @@ class GLCMesh
     public:
         std::vector <vertex> vertices;
         std::vector <unsigned int> indices;
-        std::vector <GLCTexture> textures;
+        std::vector <GLCTextureStruct> textures;
 
 	    VAO VAO;
 
-	    GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTexture>& textures);
+	    GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures);
 
 	    void Draw(GLCShader& shader, GLCCamera& camera);
 };

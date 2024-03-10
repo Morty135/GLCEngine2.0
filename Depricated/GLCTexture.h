@@ -10,14 +10,19 @@
 #include <GLCShader.h>
 
 
+
+struct GLCTextureStruct {
+    unsigned int id;
+    std::string type;
+    std::string path;
+};
+
+
+
 class GLCTexture
 {
 public:
-    unsigned int ID;
-    const char* type;
-	unsigned int unit;
-
-    GLCTexture(const char* textureSource, const char* texType, unsigned int slot, GLenum format, GLenum pixelType);
+    GLCTexture(GLCTextureStruct TextureStruct);
 
     void texUnit(GLCShader& shader, const char* uniform, unsigned int unit);
 

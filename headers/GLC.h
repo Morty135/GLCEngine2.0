@@ -15,7 +15,6 @@
 #include <GLCCamera.h>
 #include <GLCMesh.h>
 #include <GLCInput.h>
-#include <GLCTexture.h>
 #include <GLCModel.h>
 
 class GLC 

@@ -111,6 +111,10 @@
         "__locale": "cpp",
         "__node_handle": "cpp",
         "__threading_support": "cpp",
-        "__verbose_abort": "cpp"
+        "__verbose_abort": "cpp",
+        "csignal": "cpp",
+        "strstream": "cpp",
+        "ranges": "cpp",
+        "*.ipp": "cpp"
     }
 }

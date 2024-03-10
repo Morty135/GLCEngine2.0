@@ -21,7 +21,6 @@ int main()
 
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str());
-    GLCModel Car((ParentDir + "/resources/Audi/Audi R8.fbx").c_str());
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
@@ -48,8 +47,7 @@ int main()
 
         defaultShader.Use();
 
-        //Character.Draw(defaultShader, MainCamera);
-        Car.Draw(defaultShader, MainCamera);
+        Character.Draw(defaultShader, MainCamera);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();
