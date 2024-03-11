@@ -36,7 +36,8 @@ class GLCModel
         {
             loadModel(path);
         }
-        void Draw(GLCShader &shader, GLCCamera& camera);	
+        void Draw(GLCShader &shader, GLCCamera& camera);
+        void Delete();
     private:
         void loadModel(std::string const &path);
         void processNode(aiNode *node, const aiScene *scene);

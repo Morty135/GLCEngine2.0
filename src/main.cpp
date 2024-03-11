@@ -58,12 +58,32 @@ int main()
         Character.Transform = glm::translate(Character.Transform, -GLCInput.Combined() * deltaTime);
         //Character.Transform = glm::rotate(Character.Transform, glm::radians(1.0f), glm::vec3(0.0, 1.0, 0.0));
 
-        Floor.Draw(defaultShader, MainCamera);
+        //floor plane set
+        int PlaneSize = 100;
 
+        for(unsigned int x = 0; x < PlaneSize; x++)
+        {
+            for(unsigned int z = 0; z < PlaneSize; z++)
+            {
+                glm::mat4 model = glm::mat4(1.0f);
+                model = glm::translate(model, glm::vec3(x * 20.0 ,-7.0 ,z * 20.0));
+                model = glm::scale(model, glm::vec3(10.0, 1.0, 10.0));  
+                Floor.Transform = model;
+                Floor.Draw(defaultShader, MainCamera);
+            }
+        }
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();
     }
+
+
+
+    Floor.Delete();
+    Character.Delete();
+    defaultShader.Delete();
+
+
 
     glfwTerminate();
     return 0;

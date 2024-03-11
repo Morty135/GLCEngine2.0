@@ -65,3 +65,10 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera)
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
 }
+
+
+
+void GLCMesh::Delete()
+{
+	VAO.Delete();
+}

@@ -181,3 +181,13 @@ void GLCModel::Draw(GLCShader &shader,GLCCamera& camera)
         meshes[i].Transform = Transform;
     }
 }
+
+
+
+void GLCModel::Delete()
+{
+    for(unsigned int i = 0; i < meshes.size(); i++)
+    {
+        meshes[i].Delete();
+    }
+}
