@@ -24,14 +24,24 @@ int main()
     GLCShader instanceShader((ParentDir + "/shaders/instance.vert").c_str(), (ParentDir + "/shaders/instance.frag").c_str());
 
 
+    std::vector <vertex> vertices =
+    { //               COORDINATES           /           NORMALS         /       TEXTURE COORDINATES    //
+        vertex{glm::vec3(-1.0f, 0.0f,  1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
+        vertex{glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
+        vertex{glm::vec3( 1.0f, 0.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)},
+        vertex{glm::vec3( 1.0f, 0.0f,  1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
+    };
 
-    GLCModel GrassBlade((ParentDir + "/resources/GrassBlade/GrassBlade.obj").c_str());
-    GrassBlade.Transform = glm::scale(GrassBlade.Transform, glm::vec3(0.2, 0.5, 0.2));
-    GrassBlade.Transform = glm::translate(GrassBlade.Transform, glm::vec3(0.0, -8.0, 0.0));
-    GrassBlade.Transform = glm::rotate(GrassBlade.Transform, glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
+    // Indices for vertices order
+    std::vector <unsigned int> indices =
+    {
+        0, 1, 2,
+        0, 2, 3
+    };
 
 
-
+    GLCGrass Grass(vertices, indices);
+    
 
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str());
@@ -69,10 +79,8 @@ int main()
         Character.Transform = glm::translate(Character.Transform, -GLCInput.Combined() * deltaTime);
         //Character.Transform = glm::rotate(Character.Transform, glm::radians(1.0f), glm::vec3(0.0, 1.0, 0.0));
 
-        GrassBlade.Draw(instanceShader, MainCamera);
-
         //floor plane set
-        int PlaneSize = 100;
+        int PlaneSize = 50;
 
         for(unsigned int x = 0; x < PlaneSize; x++)
         {
@@ -85,6 +93,9 @@ int main()
                 Floor.Draw(defaultShader, MainCamera);
             }
         }
+
+
+        Grass.Draw(instanceShader, MainCamera);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();

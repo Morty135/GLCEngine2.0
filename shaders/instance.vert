@@ -6,20 +6,20 @@ layout (location = 2) in vec2 aTex;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+uniform vec2 offsets[100];
 
 out vec3 Pos;
 out vec3 Normal;
 out vec3 Color;
-out vec2 Texture;
 
 
 void main()
 {
     Color = vec3(1.0, 0.7, 1.0);
     Normal = Normal;
-    Texture = aTex;
     Pos = vec3(model * vec4(aPos, 1.0f));
     mat4 CameraMatrix = projection * view;
 
-    gl_Position = CameraMatrix * vec4(aPos + vec3(0.0f, 0.0f, 0.0f), 1.0);
+    vec2 offset = offsets[gl_InstanceID];
+    gl_Position = CameraMatrix * vec4(aPos + vec3(offset, 0.0), 1.0);
 }
