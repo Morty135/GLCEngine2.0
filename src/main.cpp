@@ -21,6 +21,17 @@ int main()
 
     GLCShader defaultShader((ParentDir + "/shaders/default.vert").c_str(), (ParentDir + "/shaders/default.frag").c_str());
 
+    GLCShader instanceShader((ParentDir + "/shaders/instance.vert").c_str(), (ParentDir + "/shaders/instance.frag").c_str());
+
+
+
+    GLCModel GrassBlade((ParentDir + "/resources/GrassBlade/GrassBlade.obj").c_str());
+    GrassBlade.Transform = glm::scale(GrassBlade.Transform, glm::vec3(0.2, 0.5, 0.2));
+    GrassBlade.Transform = glm::translate(GrassBlade.Transform, glm::vec3(0.0, -8.0, 0.0));
+    GrassBlade.Transform = glm::rotate(GrassBlade.Transform, glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
+
+
+
 
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str());
@@ -57,6 +68,8 @@ int main()
         Character.Draw(defaultShader, MainCamera);
         Character.Transform = glm::translate(Character.Transform, -GLCInput.Combined() * deltaTime);
         //Character.Transform = glm::rotate(Character.Transform, glm::radians(1.0f), glm::vec3(0.0, 1.0, 0.0));
+
+        GrassBlade.Draw(instanceShader, MainCamera);
 
         //floor plane set
         int PlaneSize = 100;
