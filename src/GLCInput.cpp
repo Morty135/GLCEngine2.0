@@ -6,8 +6,8 @@ GLCInput::GLCInput(GLFWwindow* Window)
 }
 
 
-float maxSpeed = 2.0f;
-float acceleration = 0.05f;
+float maxSpeed = 4.0f;
+float acceleration = 0.3f;
 
 float horizontalInput = 0.0f;
 float verticalInput = 0.0f;

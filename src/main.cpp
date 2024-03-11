@@ -17,7 +17,7 @@ int main()
     MainCamera.projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
     //MainCamera.projection = glm::ortho(-8.0f, 8.0f, -6.0f, 6.0f, 0.1f, 100.0f);
     //camera pos adjustment
-    MainCamera.position += glm::vec3(0.0f, 7.0f,10.0f);
+    MainCamera.position += glm::vec3(0.0f, 17.0f,15.0f);
 
     GLCShader defaultShader((ParentDir + "/shaders/default.vert").c_str(), (ParentDir + "/shaders/default.frag").c_str());
 
@@ -25,12 +25,12 @@ int main()
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str());
     //Transform does not need to be set for the object to exist the default matrix is 1.0f
-    //Character.Transform = glm::rotate(Character.Transform, glm::radians(90.0f), glm::vec3(0.0, 0.0, 0.0));
+    Character.Transform = glm::rotate(Character.Transform, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
 
 
 
     GLCModel Floor((ParentDir + "/resources/Floor/Floor.obj").c_str());
-    Floor.Transform = glm::translate(Floor.Transform, glm::vec3(0.0, -7.0, -7.0));
+    Floor.Transform = glm::translate(Floor.Transform, glm::vec3(0.0, -7.0, 0.0));
     Floor.Transform = glm::scale(Floor.Transform, glm::vec3(10.0, 1.0, 10.0));  
 
     float deltaTime = 0.0f;
@@ -55,9 +55,11 @@ int main()
 
 
         Character.Draw(defaultShader, MainCamera);
-        //Character.Transform = glm::rotate(Character.Transform, glm::radians(1.0f), glm::vec3(0.0, 0.0, 1.0));
+        Character.Transform = glm::translate(Character.Transform, -GLCInput.Combined() * deltaTime);
+        //Character.Transform = glm::rotate(Character.Transform, glm::radians(1.0f), glm::vec3(0.0, 1.0, 0.0));
 
         Floor.Draw(defaultShader, MainCamera);
+
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();
