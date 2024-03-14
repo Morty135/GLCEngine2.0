@@ -28,7 +28,7 @@ GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& ind
 
 
 
-void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera, unsigned int instances)
+void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera)
 {
     shader.Use();
     VAO.Bind();
@@ -62,35 +62,7 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera, unsigned int instances)
     int projectionLoc = glGetUniformLocation(shader.ID, "projection");
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-	if(instances > 1)
-	{
-		glm::vec2 translations[instances];
-		int index = 0;
-		float offset = 0.1f;
-		int gridSize = sqrt(instances); 
-		for(int y = -gridSize; y < gridSize; y += 2)
-		{
-			for(int x = -gridSize; x < gridSize; x += 2)
-			{
-				glm::vec2 translation;
-				translation.x = static_cast<float>(x) / static_cast<float>(gridSize) + offset;
-				translation.y = static_cast<float>(y) / static_cast<float>(gridSize) + offset;
-				translations[index++] = translation;
-			}
-		}
-
-		for(unsigned int i = 0; i < instances; i++)
-		{
-			int projectionLoc = glGetUniformLocation(shader.ID,  ("offsets[" + std::to_string(i) + "]").c_str());
-			glUniform2fv(projectionLoc, 1, glm::value_ptr(translations[i]));
-		}  
-		
-		glDrawElementsInstanced(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0, instances);
-	}
-	else
-	{
-		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-	}
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
 
 

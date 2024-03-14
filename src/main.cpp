@@ -52,10 +52,7 @@ int main()
     Floor.Transform = glm::translate(Floor.Transform, glm::vec3(0.0, -7.0, 0.0));
     Floor.Transform = glm::scale(Floor.Transform, glm::vec3(10.0, 1.0, 10.0));  
 
-    GLCModel GrassBlade((ParentDir + "/resources/GrassBlade/GrassBlade.obj").c_str());
-    GrassBlade.Transform = glm::translate(GrassBlade.Transform, glm::vec3(0.0, -6.0, 0.0));
-    GrassBlade.Transform = glm::scale(GrassBlade.Transform, glm::vec3(0.2, 0.5, 0.2));  
-    GrassBlade.Transform = glm::rotate(GrassBlade.Transform, glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
+    GLCGrassBlade GrassBlade(1000);
 
 
 
@@ -80,7 +77,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-        Character.Draw(defaultShader, MainCamera, 1);
+        Character.Draw(defaultShader, MainCamera);
         Character.Transform = glm::translate(Character.Transform, -GLCInput.Combined() * deltaTime);
         //Character.Transform = glm::rotate(Character.Transform, glm::radians(1.0f), glm::vec3(0.0, 1.0, 0.0));
 
@@ -95,11 +92,11 @@ int main()
                 model = glm::translate(model, glm::vec3(x * 20.0 ,-7.0 ,z * 20.0));
                 model = glm::scale(model, glm::vec3(10.0, 1.0, 10.0));  
                 Floor.Transform = model;
-                Floor.Draw(defaultShader, MainCamera, 1);
+                Floor.Draw(defaultShader, MainCamera);
             }
         }
 
-        GrassBlade.Draw(instanceShader, MainCamera, 7000);
+        GrassBlade.Draw(instanceShader, MainCamera);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();

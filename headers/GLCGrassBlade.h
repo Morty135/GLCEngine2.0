@@ -1,5 +1,5 @@
-#ifndef GLCMESH_H
-#define GLCMESH_H
+#ifndef GLCGRASSBLADE_H
+#define GLCGRASSBLADE_H
 
 #include <glad/glad.h>
 
@@ -18,26 +18,26 @@
 
 
 
-struct GLCTextureStruct {
-    unsigned int id;
-    std::string type;
-    std::string path;
-};
 
 
-
-class GLCMesh
+class GLCGrassBlade
 {
     public:
-        std::vector <vertex> vertices;
-        std::vector <unsigned int> indices;
-        std::vector <GLCTextureStruct> textures;
+        std::vector <unsigned int> indices = 
+        {
+            0, 0,
+            1, 0,
+            1, 1,
+            0, 1
+        };
 
         glm::mat4 Transform = glm::mat4(1.0f);
 
+        unsigned int instances;
+
 	    VAO VAO;
 
-	    GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures);
+	    GLCGrassBlade(unsigned int instances);
 
 	    void Draw(GLCShader& shader, GLCCamera& camera);
         void Delete();
