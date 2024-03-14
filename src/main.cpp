@@ -53,8 +53,9 @@ int main()
     Floor.Transform = glm::scale(Floor.Transform, glm::vec3(10.0, 1.0, 10.0));  
 
     GLCModel GrassBlade((ParentDir + "/resources/GrassBlade/GrassBlade.obj").c_str());
-    GrassBlade.Transform = glm::translate(GrassBlade.Transform, glm::vec3(0.0, -7.0, 0.0));
-    GrassBlade.Transform = glm::scale(GrassBlade.Transform, glm::vec3(0.4, 1.0, 0.4));  
+    GrassBlade.Transform = glm::translate(GrassBlade.Transform, glm::vec3(0.0, -6.0, 0.0));
+    GrassBlade.Transform = glm::scale(GrassBlade.Transform, glm::vec3(0.2, 0.5, 0.2));  
+    GrassBlade.Transform = glm::rotate(GrassBlade.Transform, glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
 
 
 
@@ -98,7 +99,7 @@ int main()
             }
         }
 
-        GrassBlade.Draw(instanceShader, MainCamera, 100);
+        GrassBlade.Draw(instanceShader, MainCamera, 7000);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();

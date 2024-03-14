@@ -78,13 +78,13 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera, unsigned int instances)
 				translations[index++] = translation;
 			}
 		}
-		/*
+
 		for(unsigned int i = 0; i < instances; i++)
 		{
-			int projectionLoc = glGetUniformLocation(shader.ID, "offsets[" + std::to_string(i) + "]");
-			glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+			int projectionLoc = glGetUniformLocation(shader.ID,  ("offsets[" + std::to_string(i) + "]").c_str());
+			glUniform2fv(projectionLoc, 1, glm::value_ptr(translations[i]));
 		}  
-		*/
+		
 		glDrawElementsInstanced(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0, instances);
 	}
 	else
