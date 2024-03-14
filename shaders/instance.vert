@@ -6,20 +6,19 @@ layout (location = 2) in vec2 aTex;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-uniform vec2 offsets[100];
 
 out vec3 Pos;
 out vec3 Normal;
 out vec3 Color;
-
+out vec2 Texture;
 
 void main()
 {
-    Color = vec3(1.0, 0.7, 1.0);
+    Color = vec3(0.4, 0.7, 0.2);
     Normal = Normal;
-    Pos = vec3(model * vec4(aPos, 1.0f));
+    Texture = aTex;
+    float gridSize = 1.0; // Adjust this value to change grid spacing
+    Pos = vec3(model * vec4(aPos.x + float(gl_InstanceID) * gridSize, aPos.y, aPos.z + float(gl_InstanceID) * gridSize, 1.0));
     mat4 CameraMatrix = projection * view;
-
-    vec2 offset = offsets[gl_InstanceID];
-    gl_Position = CameraMatrix * vec4(aPos + vec3(offset, 0.0), 1.0);
+    gl_Position = CameraMatrix * vec4(Pos, 1.0);
 }

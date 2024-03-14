@@ -36,7 +36,7 @@ class GLCModel
         {
             loadModel(path);
         }
-        void Draw(GLCShader &shader, GLCCamera& camera);
+        void Draw(GLCShader &shader, GLCCamera& camera, unsigned int instances);
         void Delete();
     private:
         void loadModel(std::string const &path);

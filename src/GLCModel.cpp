@@ -173,11 +173,11 @@ unsigned int GLCModel::TextureFromFile(const char *path, const std::string &dire
 
 
 
-void GLCModel::Draw(GLCShader &shader,GLCCamera& camera)
+void GLCModel::Draw(GLCShader &shader,GLCCamera& camera, unsigned int instances)
 {
     for(unsigned int i = 0; i < meshes.size(); i++)
     {
-        meshes[i].Draw(shader, camera);
+        meshes[i].Draw(shader, camera, instances);
         meshes[i].Transform = Transform;
     }
 }

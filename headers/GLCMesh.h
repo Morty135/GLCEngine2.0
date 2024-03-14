@@ -39,7 +39,7 @@ class GLCMesh
 
 	    GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures);
 
-	    void Draw(GLCShader& shader, GLCCamera& camera);
+	    void Draw(GLCShader& shader, GLCCamera& camera, unsigned int instances);
         void Delete();
 };
 
