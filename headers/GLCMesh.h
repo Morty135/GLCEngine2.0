@@ -34,12 +34,15 @@ class GLCMesh
         std::vector <GLCTextureStruct> textures;
 
         glm::mat4 Transform = glm::mat4(1.0f);
+        unsigned int instances;
+        
+        std::vector<glm::vec2> translations;
 
 	    VAO VAO;
 
-	    GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures);
+	    GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures, unsigned int instances);
 
-	    void Draw(GLCShader& shader, GLCCamera& camera, unsigned int instances);
+	    void Draw(GLCShader& shader, GLCCamera& camera);
         void Delete();
 };
 

@@ -27,7 +27,7 @@ void GLCModel::processNode(aiNode *node, const aiScene *scene)
     for(unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]]; 
-        meshes.push_back(processMesh(mesh, scene));			
+        meshes.push_back(processMesh(mesh, scene));	
     }
     // then do the same for each of its children
     for(unsigned int i = 0; i < node->mNumChildren; i++)
@@ -93,7 +93,7 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
     std::vector<GLCTextureStruct> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
-    return GLCMesh(vertices, indices, textures);
+    return GLCMesh(vertices, indices, textures, instances);
 }
 
 
@@ -173,11 +173,11 @@ unsigned int GLCModel::TextureFromFile(const char *path, const std::string &dire
 
 
 
-void GLCModel::Draw(GLCShader &shader,GLCCamera& camera, unsigned int instances)
+void GLCModel::Draw(GLCShader &shader,GLCCamera& camera)
 {
     for(unsigned int i = 0; i < meshes.size(); i++)
     {
-        meshes[i].Draw(shader, camera, instances);
+        meshes[i].Draw(shader, camera);
         meshes[i].Transform = Transform;
     }
 }

@@ -31,12 +31,14 @@ class GLCModel
         std::vector<GLCTextureStruct> textures_loaded;
 
         glm::mat4 Transform = glm::mat4(1.0f);
+        unsigned int instances = 1;
 
-        GLCModel(std::string const &path)
+        GLCModel(std::string const &path, unsigned int inputInstances)
         {
+            instances = inputInstances;
             loadModel(path);
         }
-        void Draw(GLCShader &shader, GLCCamera& camera, unsigned int instances);
+        void Draw(GLCShader &shader, GLCCamera& camera);
         void Delete();
     private:
         void loadModel(std::string const &path);

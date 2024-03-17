@@ -14,7 +14,7 @@ out vec2 Texture;
 
 void main()
 {
-    Color = vec3(1.0, 0.7, 1.0);
+    Color = vec3(1.0, 1.0, 1.0);
     Normal = Normal;
     Texture = aTex;
     Pos = vec3(model * vec4(aPos, 1.0f));

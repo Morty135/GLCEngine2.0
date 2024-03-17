@@ -1,10 +1,11 @@
 #include <GLCMesh.h>
 
-GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures)
+GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures, unsigned int instances)
 {
     GLCMesh::vertices = vertices;
     GLCMesh::indices = indices;
     GLCMesh::textures = textures;
+	GLCMesh::instances = instances;
 
 
     VAO.Bind();
@@ -22,13 +23,33 @@ GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& ind
 	VBO.Unbind();
 	EBO.Unbind();
 
+
+
+	if(instances > 1)
+	{
+		translations.resize(instances);
+		int index = 0;
+		float offset = 0.1f;
+		int gridSize = sqrt(instances); 
+		for(int y = -gridSize; y < gridSize; y += 2)
+		{
+			for(int x = -gridSize; x < gridSize; x += 2)
+			{
+				glm::vec2 translation;
+				translation.x = static_cast<float>(x) / static_cast<float>(gridSize) + offset + rand()/ (RAND_MAX + 1.);
+				translation.y = static_cast<float>(y) / static_cast<float>(gridSize) + offset + rand()/ (RAND_MAX + 1.);
+				translations[index++] = translation;
+			}
+		}
+	}
+
 }
 
 
 
 
 
-void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera, unsigned int instances)
+void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera)
 {
     shader.Use();
     VAO.Bind();
@@ -64,21 +85,6 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera, unsigned int instances)
 
 	if(instances > 1)
 	{
-		glm::vec2 translations[instances];
-		int index = 0;
-		float offset = 0.1f;
-		int gridSize = sqrt(instances); 
-		for(int y = -gridSize; y < gridSize; y += 2)
-		{
-			for(int x = -gridSize; x < gridSize; x += 2)
-			{
-				glm::vec2 translation;
-				translation.x = static_cast<float>(x) / static_cast<float>(gridSize) + offset;
-				translation.y = static_cast<float>(y) / static_cast<float>(gridSize) + offset;
-				translations[index++] = translation;
-			}
-		}
-
 		for(unsigned int i = 0; i < instances; i++)
 		{
 			int projectionLoc = glGetUniformLocation(shader.ID,  ("offsets[" + std::to_string(i) + "]").c_str());
