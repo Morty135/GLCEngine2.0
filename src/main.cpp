@@ -17,7 +17,7 @@ int main()
     MainCamera.projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
     //MainCamera.projection = glm::ortho(-8.0f, 8.0f, -6.0f, 6.0f, 0.1f, 100.0f);
     //camera pos adjustment
-    MainCamera.position += glm::vec3(0.0f, 17.0f,15.0f);
+    MainCamera.position += glm::vec3(0.0f, 27.0f, 25.0f);
 
     GLCShader defaultShader((ParentDir + "/shaders/default.vert").c_str(), (ParentDir + "/shaders/default.frag").c_str());
 
