@@ -26,10 +26,10 @@ void main()
 {
     vec2 random = vec2(rand(aPos.xz), rand(aPos.zx));
     random = random * 8; 
-    Color = vec3(0.4, 0.7, 0.2);
     Normal = Normal;
     Texture = aTex;
     vec2 offset = offsets[gl_InstanceID];
+    Color = vec3(0.3, 0.9 * offset.y + offset.y * 0.9, 0.1);
     offset = offset * 170;
     Pos = vec3(model * vec4(aPos.x + offset.x, aPos.y, aPos.z + offset.y, 1.0));
     mat4 CameraMatrix = projection * view;

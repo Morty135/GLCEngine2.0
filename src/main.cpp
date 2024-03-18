@@ -1,4 +1,6 @@
 #include <GLC.h>
+#include <GLCTerrain.h>
+#include <GLCGrass.h>
 
 
 int width = 1280;
@@ -25,15 +27,14 @@ int main()
     
 
 
+    GLCTerrain Terrain;
+    GLCGrass Grass;
+
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str(), 1);
     //Transform does not need to be set for the object to exist the default matrix is 1.0f
     Character.Transform = glm::rotate(Character.Transform, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
 
 
-
-    GLCModel Floor((ParentDir + "/resources/Floor/Floor.obj").c_str(), 1);
-    Floor.Transform = glm::translate(Floor.Transform, glm::vec3(0.0, -7.0, 0.0));
-    Floor.Transform = glm::scale(Floor.Transform, glm::vec3(10.0, 1.0, 10.0));  
 
     GLCModel GrassBlade((ParentDir + "/resources/GrassBlade/GrassBlade.obj").c_str(), 4000);
     GrassBlade.Transform = glm::translate(GrassBlade.Transform, glm::vec3(0.0, -6.0, 0.0));
@@ -67,22 +68,10 @@ int main()
         Character.Transform = glm::translate(Character.Transform, -GLCInput.Combined() * deltaTime);
         //Character.Transform = glm::rotate(Character.Transform, glm::radians(1.0f), glm::vec3(0.0, 1.0, 0.0));
 
-        //floor plane set
-        int PlaneSize = 50;
-
-        for(unsigned int x = 0; x < PlaneSize; x++)
-        {
-            for(unsigned int z = 0; z < PlaneSize; z++)
-            {
-                glm::mat4 model = glm::mat4(1.0f);
-                model = glm::translate(model, glm::vec3(x * 20.0 ,-7.0 ,z * 20.0));
-                model = glm::scale(model, glm::vec3(10.0, 1.0, 10.0));  
-                Floor.Transform = model;
-                Floor.Draw(defaultShader, MainCamera);
-            }
-        }
 
         GrassBlade.Draw(instanceShader, MainCamera);
+        Terrain.Draw(instanceShader, MainCamera);
+        Grass.Draw(instanceShader, MainCamera);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();
@@ -90,10 +79,10 @@ int main()
 
 
 
-    Floor.Delete();
     Character.Delete();
     GrassBlade.Delete();
     defaultShader.Delete();
+    Terrain.Delete();
 
 
 
