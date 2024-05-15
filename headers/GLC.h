@@ -16,7 +16,7 @@
 #include <GLCMesh.h>
 #include <GLCInput.h>
 #include <GLCModel.h>
-#include <GLCChunk.h>
+#include <GLCTerrain.h>
 
 class GLC 
 {

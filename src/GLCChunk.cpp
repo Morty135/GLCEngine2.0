@@ -1,8 +1,15 @@
 #include <GLCChunk.h>
 
-GLCChunk::GLCChunk() : ChunkMesh(GenerateMesh()) 
+GLCChunk::GLCChunk(int gridSize, float cellSize, float frequency, int X, int Y) : ChunkMesh(GenerateMesh()) 
 {
+    GLCChunk::gridSize = gridSize;
+    GLCChunk::cellSize = cellSize;
+    GLCChunk::frequency = frequency;
 
+    GLCChunk::xOffset = X * gridSize;
+    GLCChunk::zOffset = Y * gridSize;
+
+    ChunkMesh = GenerateMesh();
 }
 
 
@@ -28,14 +35,14 @@ GLCMesh GLCChunk::GenerateMesh()
 
 
 
-    siv::PerlinNoise perlinFunc{ std::random_device{} };
+    siv::PerlinNoise perlinFunc{ 777 };
 
 
     // Generate vertices
     for (int i = 0; i <= gridSize; ++i) {
         for (int j = 0; j <= gridSize; ++j) {
-            double x = j * cellSize;
-            double z = i * cellSize;
+            double x = (j + xOffset) * cellSize;
+            double z = (i + zOffset) * cellSize;
 
             double perlinHeight = perlinFunc.octave2D_01(x * frequency, z * frequency, 7, 0.5);
 

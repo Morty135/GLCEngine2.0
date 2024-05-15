@@ -17,7 +17,7 @@ int main()
     MainCamera.projection = glm::perspective(glm::radians(45.0f), (float)width/(float)height, 0.1f, 100.0f);
     //MainCamera.projection = glm::ortho(-8.0f, 8.0f, -6.0f, 6.0f, 0.1f, 100.0f);
     //camera pos adjustment
-    MainCamera.position += glm::vec3(0.0f, 27.0f, 25.0f);
+    MainCamera.position += glm::vec3(0.0f, 45.0f, 37.0f);
 
     GLCShader defaultShader((ParentDir + "/shaders/default.vert").c_str(), (ParentDir + "/shaders/default.frag").c_str());
 
@@ -27,13 +27,19 @@ int main()
     
 
 
-    GLCChunk Terrain;
+
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str(), 1);
     //Transform does not need to be set for the object to exist the default matrix is 1.0f
     Character.Transform = glm::rotate(Character.Transform, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
 
     
+
+
+
+    GLCTerrain Terrain(500, 0.1, 0.05);
+
+
 
 
 
@@ -71,7 +77,7 @@ int main()
 
 
         GrassBlade.Draw(instanceShader, MainCamera);
-        Terrain.Draw(terrainShader, MainCamera);
+        Terrain.Draw(terrainShader, MainCamera, Character.Transform);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();

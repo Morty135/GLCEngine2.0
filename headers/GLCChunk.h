@@ -1,5 +1,5 @@
-#ifndef GLCTERRAIN_H
-#define GLCTERRAIN_H
+#ifndef GLCCHUNK_H
+#define GLCCHUNK_H
 
 #include <glad/glad.h>
 
@@ -11,8 +11,6 @@
 #include <vector>
 #include <iostream>
 
-#include <VAO.h>
-#include <EBO.h>
 #include <GLCCamera.h>
 #include <GLCShader.h>
 #include <GLCMesh.h>
@@ -25,19 +23,19 @@ class GLCChunk
     public:
         std::vector <vertex> vertices;
         std::vector <unsigned int> indices;
-
-        glm::mat4 Transform = glm::mat4(1.0f);
         
         std::vector<glm::vec2> translations;
         std::vector<GLCTextureStruct> textures;
 
-        int gridSize = 1000;
-        float cellSize = 0.1;
-        float frequency = 0.05;
+        int gridSize = 100;
+        float cellSize = 1;
+        float frequency = 1;
+
+        float xOffset = 0, zOffset = 0;
         
         GLCMesh ChunkMesh;
 
-	    GLCChunk();
+	    GLCChunk(int gridSize, float cellSize, float frequency, int X, int Y);
 
         GLCMesh GenerateMesh();
 
