@@ -1,5 +1,4 @@
 #include <GLC.h>
-#include <GLCTerrain.h>
 
 
 int width = 1280;
@@ -23,10 +22,12 @@ int main()
     GLCShader defaultShader((ParentDir + "/shaders/default.vert").c_str(), (ParentDir + "/shaders/default.frag").c_str());
 
     GLCShader instanceShader((ParentDir + "/shaders/instance.vert").c_str(), (ParentDir + "/shaders/instance.frag").c_str());
+
+    GLCShader terrainShader((ParentDir + "/shaders/terrain.vert").c_str(), (ParentDir + "/shaders/terrain.frag").c_str());
     
 
 
-    GLCTerrain Terrain;
+    GLCChunk Terrain;
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str(), 1);
     //Transform does not need to be set for the object to exist the default matrix is 1.0f
@@ -70,7 +71,7 @@ int main()
 
 
         GrassBlade.Draw(instanceShader, MainCamera);
-        Terrain.Draw(defaultShader, MainCamera);
+        Terrain.Draw(terrainShader, MainCamera);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();

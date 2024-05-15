@@ -20,21 +20,26 @@
 
 
 
-class GLCTerrain
+class GLCChunk
 {
     public:
         std::vector <vertex> vertices;
         std::vector <unsigned int> indices;
 
         glm::mat4 Transform = glm::mat4(1.0f);
-        glm::vec3 Position = glm::vec3(0.0, -7.0, 0.0);
         
         std::vector<glm::vec2> translations;
         std::vector<GLCTextureStruct> textures;
-        
-        GLCMesh TerrainMesh;
 
-	    GLCTerrain();
+        int gridSize = 1000;
+        float cellSize = 0.1;
+        float frequency = 0.05;
+        
+        GLCMesh ChunkMesh;
+
+	    GLCChunk();
+
+        GLCMesh GenerateMesh();
 
 	    void Draw(GLCShader& shader, GLCCamera& camera);
         void Delete();

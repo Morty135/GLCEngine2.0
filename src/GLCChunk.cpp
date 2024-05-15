@@ -1,27 +1,48 @@
-#include <GLCTerrain.h>
+#include <GLCChunk.h>
 
-GLCTerrain::GLCTerrain()
-    : TerrainMesh(vertices, indices, textures, 1)
+GLCChunk::GLCChunk() : ChunkMesh(GenerateMesh()) 
 {
 
-    //GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures, unsigned int instances);
+}
+
+
+
+
+
+void GLCChunk::Draw(GLCShader& shader, GLCCamera& camera)
+{
+    ChunkMesh.Draw(shader, camera);
+}
+
+
+
+void GLCChunk::Delete()
+{
+	ChunkMesh.Delete();
+}
+
+GLCMesh GLCChunk::GenerateMesh()
+{
     vertices.clear();
     indices.clear();
 
-    int gridSize = 100;
-    float cellSize = 0.5;
 
+
+    siv::PerlinNoise perlinFunc{ std::random_device{} };
 
 
     // Generate vertices
     for (int i = 0; i <= gridSize; ++i) {
         for (int j = 0; j <= gridSize; ++j) {
-            float x = j * cellSize;
-            float z = i * cellSize;
+            double x = j * cellSize;
+            double z = i * cellSize;
+
+            double perlinHeight = perlinFunc.octave2D_01(x * frequency, z * frequency, 7, 0.5);
+
             vertices.push_back(vertex{
-                glm::vec3(x, -7.0f, z),
-                glm::vec3(0.0f, 1.0f, 0.0f),
-                glm::vec2((float)j / gridSize, (float)i / gridSize)
+                glm::vec3(x, -9.0 + perlinHeight * 10, z),
+                glm::vec3(1.0f, 1.0f, 1.0f),
+                glm::vec2(perlinHeight, 0.0f)
             });
         }
     }
@@ -43,20 +64,5 @@ GLCTerrain::GLCTerrain()
             indices.push_back(bottomRight);
         }
     }
-}
-
-
-
-
-
-void GLCTerrain::Draw(GLCShader& shader, GLCCamera& camera)
-{
-    TerrainMesh.Draw(shader, camera);
-}
-
-
-
-void GLCTerrain::Delete()
-{
-	TerrainMesh.Delete();
+    return GLCMesh(vertices, indices, textures, 1);
 }
