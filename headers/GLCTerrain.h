@@ -15,6 +15,8 @@
 #include <EBO.h>
 #include <GLCCamera.h>
 #include <GLCShader.h>
+#include <GLCMesh.h>
+#include <PerlinNoise.h>
 
 
 
@@ -26,11 +28,11 @@ class GLCTerrain
 
         glm::mat4 Transform = glm::mat4(1.0f);
         glm::vec3 Position = glm::vec3(0.0, -7.0, 0.0);
-        unsigned int instances = 4000;
         
         std::vector<glm::vec2> translations;
-
-	    VAO VAO;
+        std::vector<GLCTextureStruct> textures;
+        
+        GLCMesh TerrainMesh;
 
 	    GLCTerrain();
 

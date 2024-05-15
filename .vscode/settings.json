@@ -115,6 +115,7 @@
         "csignal": "cpp",
         "strstream": "cpp",
         "ranges": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "coroutine": "cpp"
     }
 }

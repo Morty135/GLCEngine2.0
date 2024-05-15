@@ -1,6 +1,5 @@
 #include <GLC.h>
 #include <GLCTerrain.h>
-#include <GLCGrass.h>
 
 
 int width = 1280;
@@ -28,11 +27,12 @@ int main()
 
 
     GLCTerrain Terrain;
-    GLCGrass Grass;
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str(), 1);
     //Transform does not need to be set for the object to exist the default matrix is 1.0f
     Character.Transform = glm::rotate(Character.Transform, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
+
+    
 
 
 
@@ -70,8 +70,7 @@ int main()
 
 
         GrassBlade.Draw(instanceShader, MainCamera);
-        Terrain.Draw(instanceShader, MainCamera);
-        Grass.Draw(instanceShader, MainCamera);
+        Terrain.Draw(defaultShader, MainCamera);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();
