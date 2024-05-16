@@ -10,7 +10,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <cmath> 
+#include <cmath>
+#include <thread>
 
 #include <GLCCamera.h>
 #include <GLCShader.h>
@@ -37,7 +38,7 @@ class GLCTerrain
             return std::max(0.0, std::min(1.0, value));
         }
 
-	    void Draw(GLCShader& shader, GLCCamera& camera, glm::mat4& playerTransform);
+	    void Draw(GLCShader& GroundShader, GLCShader& GrassShader, GLCCamera& camera, glm::mat4& playerTransform);
         void Delete();
 };
 

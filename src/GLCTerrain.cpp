@@ -1,5 +1,9 @@
 #include <GLCTerrain.h>
 
+
+
+
+
 GLCTerrain::GLCTerrain(int gridSize, float cellSize, float frequency)
 {
     GLCTerrain::gridSize = gridSize;
@@ -10,7 +14,11 @@ GLCTerrain::GLCTerrain(int gridSize, float cellSize, float frequency)
     chunks.push_back(chunk);
 }
 
-void GLCTerrain::Draw(GLCShader& shader, GLCCamera& camera, glm::mat4& playerTransform)
+
+
+
+
+void GLCTerrain::Draw(GLCShader& GroundShader, GLCShader& GrassShader, GLCCamera& camera, glm::mat4& playerTransform)
 {
     glm::vec3 playerPosition(playerTransform[3][0], 0.0f, playerTransform[3][2]);
 
@@ -21,10 +29,10 @@ void GLCTerrain::Draw(GLCShader& shader, GLCCamera& camera, glm::mat4& playerTra
 
 
 
-    int startX = X - 1;
-    int endX = X + 1;
-    int startZ = Z - 1;
-    int endZ = Z + 1;
+    int startX = X - 2;
+    int endX = X + 2;
+    int startZ = Z - 2;
+    int endZ = Z + 2;
 
     // Iterate over the sectors surrounding the player
     for (int x = startX; x <= endX; x++)
@@ -56,9 +64,14 @@ void GLCTerrain::Draw(GLCShader& shader, GLCCamera& camera, glm::mat4& playerTra
 
     for(unsigned int i = 0; i < chunks.size(); i++)
     {
-        chunks[i].Draw(shader, camera);
+        chunks[i].Draw(GroundShader, GrassShader, camera);
     }
 }
+
+
+
+
+
 void GLCTerrain::Delete()
 {
     for(unsigned int i = 0; i < chunks.size(); i++)

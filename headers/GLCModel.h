@@ -31,11 +31,11 @@ class GLCModel
         std::vector<GLCTextureStruct> textures_loaded;
 
         glm::mat4 Transform = glm::mat4(1.0f);
-        unsigned int instances = 1;
+        std::vector<glm::vec3> instaceOffsets = { glm::vec3(0.0f) };
 
-        GLCModel(std::string const &path, unsigned int inputInstances)
+        GLCModel(std::string const &path, std::vector<glm::vec3> instaceOffsets = { glm::vec3(0.0f) })
         {
-            instances = inputInstances;
+            GLCModel::instaceOffsets = instaceOffsets;
             loadModel(path);
         }
         void Draw(GLCShader &shader, GLCCamera& camera);

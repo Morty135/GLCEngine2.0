@@ -14,7 +14,6 @@ void GLCModel::loadModel(std::string const &path)
         return;
     }
     directory = path.substr(0, path.find_last_of('/'));
-    std::cout << directory;
 
     processNode(scene->mRootNode, scene);
 }
@@ -93,7 +92,7 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
     std::vector<GLCTextureStruct> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
-    return GLCMesh(vertices, indices, textures, instances);
+    return GLCMesh(vertices, indices, textures, instaceOffsets);
 }
 
 

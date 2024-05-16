@@ -1,1 +1,2 @@
 Change the way the terrain is generated to perlin based generating
+make the grass on each chunk by sending the perlin in the specular position

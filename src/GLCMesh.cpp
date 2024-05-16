@@ -1,11 +1,12 @@
 #include <GLCMesh.h>
 
-GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures, unsigned int instances)
+GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures,
+std::vector<glm::vec3> instaceOffsets)
 {
     GLCMesh::vertices = vertices;
     GLCMesh::indices = indices;
     GLCMesh::textures = textures;
-	GLCMesh::instances = instances;
+	GLCMesh::instaceOffsets = instaceOffsets;
 
 
     VAO.Bind();
@@ -22,27 +23,6 @@ GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& ind
 	VAO.Unbind();
 	VBO.Unbind();
 	EBO.Unbind();
-
-
-
-	if(instances > 1)
-	{
-		translations.resize(instances);
-		int index = 0;
-		float offset = 0.1f;
-		int gridSize = sqrt(instances); 
-		for(int y = -gridSize; y < gridSize; y += 2)
-		{
-			for(int x = -gridSize; x < gridSize; x += 2)
-			{
-				glm::vec2 translation;
-				translation.x = static_cast<float>(x) / static_cast<float>(gridSize) + offset + rand()/ (RAND_MAX + 1.);
-				translation.y = static_cast<float>(y) / static_cast<float>(gridSize) + offset + rand()/ (RAND_MAX + 1.);
-				translations[index++] = translation;
-			}
-		}
-	}
-
 }
 
 
@@ -83,15 +63,14 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera)
     int projectionLoc = glGetUniformLocation(shader.ID, "projection");
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-	if(instances > 1)
+	if(instaceOffsets.size() > 1)
 	{
-		for(unsigned int i = 0; i < instances; i++)
+		for(unsigned int i = 0; i < instaceOffsets.size(); i++)
 		{
 			int projectionLoc = glGetUniformLocation(shader.ID,  ("offsets[" + std::to_string(i) + "]").c_str());
-			glUniform2fv(projectionLoc, 1, glm::value_ptr(translations[i]));
+			glUniform3fv(projectionLoc, 1, glm::value_ptr(instaceOffsets[i]));
 		}  
-		
-		glDrawElementsInstanced(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0, instances);
+		glDrawElementsInstanced(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0, instaceOffsets.size());
 	}
 	else
 	{
