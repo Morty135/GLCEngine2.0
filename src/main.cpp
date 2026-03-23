@@ -21,17 +21,13 @@ int main()
 
     GLCShader defaultShader((ParentDir + "/shaders/default.vert").c_str(), (ParentDir + "/shaders/default.frag").c_str());
 
-    GLCShader grassShader((ParentDir + "/shaders/grass.vert").c_str(), (ParentDir + "/shaders/grass.frag").c_str());
-
     GLCShader terrainShader((ParentDir + "/shaders/terrain.vert").c_str(), (ParentDir + "/shaders/terrain.frag").c_str());
-
-
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str());
     //Transform does not need to be set for the object to exist the default matrix is 1.0f
     Character.Transform = glm::rotate(Character.Transform, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
-
-    
+    //this demonstrates scaling on transfform mat
+    Character.Transform = glm::scale(Character.Transform, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
 
@@ -54,7 +50,7 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        MainCamera.position += GLCInput.Combined() * deltaTime;
+        MainCamera.position = glm::vec3(Character.Transform[3]) + glm::vec3(0.0f, 20.0f, 20.0f);
 
         GLCInput.processInput();
 
@@ -67,7 +63,7 @@ int main()
         //Character.Transform = glm::rotate(Character.Transform, glm::radians(1.0f), glm::vec3(0.0, 1.0, 0.0));
 
 
-        Terrain.Draw(terrainShader, grassShader ,MainCamera, Character.Transform);
+        Terrain.Draw(terrainShader ,MainCamera, Character.Transform);
 
         glfwSwapBuffers(GLC.window);
         glfwPollEvents();

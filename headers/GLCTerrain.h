@@ -38,7 +38,7 @@ class GLCTerrain
             return std::max(0.0, std::min(1.0, value));
         }
 
-	    void Draw(GLCShader& GroundShader, GLCShader& GrassShader, GLCCamera& camera, glm::mat4& playerTransform);
+	    void Draw(GLCShader& GroundShader, GLCCamera& camera, glm::mat4& playerTransform);
         void Delete();
 };
 

@@ -1,12 +1,10 @@
 #include <GLCMesh.h>
 
-GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures,
-std::vector<glm::vec3> instaceOffsets)
+GLCMesh::GLCMesh(std::vector <vertex>& vertices, std::vector <unsigned int>& indices, std::vector <GLCTextureStruct>& textures)
 {
     GLCMesh::vertices = vertices;
     GLCMesh::indices = indices;
     GLCMesh::textures = textures;
-	GLCMesh::instaceOffsets = instaceOffsets;
 
 
     VAO.Bind();
@@ -63,19 +61,7 @@ void GLCMesh::Draw(GLCShader& shader, GLCCamera& camera)
     int projectionLoc = glGetUniformLocation(shader.ID, "projection");
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-	if(instaceOffsets.size() > 1)
-	{
-		for(unsigned int i = 0; i < instaceOffsets.size(); i++)
-		{
-			int projectionLoc = glGetUniformLocation(shader.ID,  ("offsets[" + std::to_string(i) + "]").c_str());
-			glUniform3fv(projectionLoc, 1, glm::value_ptr(instaceOffsets[i]));
-		}  
-		glDrawElementsInstanced(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0, instaceOffsets.size());
-	}
-	else
-	{
-		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-	}
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
 
 

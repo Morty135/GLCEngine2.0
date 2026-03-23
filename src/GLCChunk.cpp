@@ -1,6 +1,6 @@
 #include <GLCChunk.h>
 
-GLCChunk::GLCChunk(int gridSize, float cellSize, float frequency, int X, int Y) : ChunkMesh(GenerateMesh()), Grass(GenerateGrass())
+GLCChunk::GLCChunk(int gridSize, float cellSize, float frequency, int X, int Y) : ChunkMesh(GenerateMesh())
 {
     GLCChunk::gridSize = gridSize;
     GLCChunk::cellSize = cellSize;
@@ -10,17 +10,15 @@ GLCChunk::GLCChunk(int gridSize, float cellSize, float frequency, int X, int Y) 
     GLCChunk::zOffset = Y * gridSize;
 
     ChunkMesh = GenerateMesh();
-    Grass = GenerateGrass();
 }
 
 
 
 
 
-void GLCChunk::Draw(GLCShader& GroundShader, GLCShader& GrassShader, GLCCamera& camera)
+void GLCChunk::Draw(GLCShader& GroundShader, GLCCamera& camera)
 {
     ChunkMesh.Draw(GroundShader, camera);
-    Grass.Draw(GrassShader, camera);
 }
 
 
@@ -30,7 +28,6 @@ void GLCChunk::Draw(GLCShader& GroundShader, GLCShader& GrassShader, GLCCamera& 
 void GLCChunk::Delete()
 {
 	ChunkMesh.Delete();
-    Grass.Delete();
 }
 
 
@@ -77,19 +74,6 @@ GLCMesh GLCChunk::GenerateMesh()
             indices.push_back(bottomRight);
         }
     }
-    std::vector<glm::vec3> instaceOffsets = { glm::vec3(0.0f) };
-    return GLCMesh(vertices, indices, textures, instaceOffsets);
-}
-
-
-
-GLCModel GLCChunk::GenerateGrass()
-{
-    for(int i = 0; i < 4000; i++)
-    {
-        instaceOffsets.push_back(glm::vec3(i, i, i));
-    }
-    std::string ParentDir = (std::filesystem::current_path().std::filesystem::path::parent_path()).string();
-    return GLCModel((ParentDir + "/resources/GrassBlade/GrassBlade.obj").c_str(), instaceOffsets);
+    return GLCMesh(vertices, indices, textures);
 }
 

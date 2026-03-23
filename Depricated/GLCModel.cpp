@@ -92,7 +92,7 @@ GLCMesh GLCModel::processMesh(aiMesh *mesh, const aiScene *scene)
     std::vector<GLCTextureStruct> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
-    return GLCMesh(vertices, indices, textures);
+    return GLCMesh(vertices, indices, textures, instaceOffsets);
 }
 
 

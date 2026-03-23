@@ -38,15 +38,12 @@ class GLCChunk
         siv::PerlinNoise perlinFunc{ 777 };
         
         GLCMesh ChunkMesh;
-        GLCModel Grass;
 
 	    GLCChunk(int gridSize, float cellSize, float frequency, int X, int Y);
 
         GLCMesh GenerateMesh();
 
-        GLCModel GenerateGrass();
-
-	    void Draw(GLCShader& GroundShader, GLCShader& GrassShader, GLCCamera& camera);
+	    void Draw(GLCShader& GroundShader, GLCCamera& camera);
         void Delete();
 };
 

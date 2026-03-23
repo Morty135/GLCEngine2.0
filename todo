@@ -1,2 +1,12 @@
-Change the way the terrain is generated to perlin based generating
-make the grass on each chunk by sending the perlin in the specular position
+replace transforms with custom engine like transform struct:
+struct Transform {
+    glm::vec3 position;
+    glm::vec3 rotation;
+    glm::vec3 scale;
+};
+
+feed the strut to the mat4 on update
+
+make the character move on the terrain have the camera on the characters head
+
+the transform thing should be for the camera too

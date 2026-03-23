@@ -18,7 +18,7 @@ GLCTerrain::GLCTerrain(int gridSize, float cellSize, float frequency)
 
 
 
-void GLCTerrain::Draw(GLCShader& GroundShader, GLCShader& GrassShader, GLCCamera& camera, glm::mat4& playerTransform)
+void GLCTerrain::Draw(GLCShader& GroundShader, GLCCamera& camera, glm::mat4& playerTransform)
 {
     glm::vec3 playerPosition(playerTransform[3][0], 0.0f, playerTransform[3][2]);
 
@@ -64,7 +64,7 @@ void GLCTerrain::Draw(GLCShader& GroundShader, GLCShader& GrassShader, GLCCamera
 
     for(unsigned int i = 0; i < chunks.size(); i++)
     {
-        chunks[i].Draw(GroundShader, GrassShader, camera);
+        chunks[i].Draw(GroundShader, camera);
     }
 }
 
