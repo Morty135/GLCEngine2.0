@@ -7,9 +7,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB SOURCES "src/*")
 file(GLOB HEADERS "headers/*")
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error")
+
 add_subdirectory(include/glfw)
 add_subdirectory(include/glad)
 add_subdirectory(include/glm)
+
+# fix for the unzip compiler error
+set(ASSIMP_BUILD_MINIZIP ON CACHE BOOL "" FORCE)
+set(ASSIMP_USE_HUNTER ON CACHE BOOL "" FORCE)
+set(ASSIMP_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
+
 add_subdirectory(include/assimp)
 
 add_executable("${CMAKE_PROJECT_NAME}" ${SOURCES} ${HEADERS})
