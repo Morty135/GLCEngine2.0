@@ -22,6 +22,8 @@ public:
     void Use();
 
     void Delete();
+private:
+    void compileErrors(unsigned int shader, const char* type);
 };
 
 

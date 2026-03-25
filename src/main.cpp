@@ -31,6 +31,8 @@ int main()
     //camera pos adjustment
     MainCamera.position += glm::vec3(0.0f, 45.0f, 37.0f);
 
+    glViewport(0, 0, width, height);
+
     GLCShader defaultShader((ParentDir + "/shaders/default.vert").c_str(), (ParentDir + "/shaders/default.frag").c_str());
 
     GLCShader framebufferProgram((ParentDir + "/shaders/framebuffer.vert").c_str(), (ParentDir + "/shaders/framebuffer.frag").c_str());
@@ -38,6 +40,10 @@ int main()
 	glUniform1i(glGetUniformLocation(framebufferProgram.ID, "screenTexture"), 0);
 
     GLCShader terrainShader((ParentDir + "/shaders/terrain.vert").c_str(), (ParentDir + "/shaders/terrain.frag").c_str());
+
+    glEnable(GL_DEPTH_TEST);
+
+
 
     GLCModel Character((ParentDir + "/resources/character/character.obj").c_str());
     //Transform does not need to be set for the object to exist the default matrix is 1.0f
@@ -55,8 +61,6 @@ int main()
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
-
-    glViewport(0, 0, width, height);
 
     unsigned int rectVAO, rectVBO;
 	glGenVertexArrays(1, &rectVAO);
@@ -79,8 +83,10 @@ int main()
     glGenTextures(1, &framebufferTexture);
     glBindTexture(GL_TEXTURE_2D, framebufferTexture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, framebufferTexture, 0);
 
     unsigned int RBO;
@@ -103,7 +109,7 @@ int main()
 
         GLCInput.processInput();
 
-        //glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -131,6 +137,9 @@ int main()
 
     Character.Delete();
     defaultShader.Delete();
+    glDeleteFramebuffers(1, &FBO);
+    glDeleteTextures(1, &framebufferTexture);
+    glDeleteRenderbuffers(1, &RBO);
     Terrain.Delete();
 
 

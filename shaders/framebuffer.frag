@@ -5,8 +5,8 @@ in vec2 texCoords;
 
 uniform sampler2D screenTexture;
 
-
 void main()
 {
-    FragColor = texture(screenTexture, texCoords);
-} 
+    vec3 color = vec3(0.0f);
+    FragColor = vec4(color, 1.0f);
+}
