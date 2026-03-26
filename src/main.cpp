@@ -4,6 +4,9 @@
 int width = 1280;
 int height = 800;
 
+int fbWidth = 320;
+int fbHeight = 200;
+
 std::string ParentDir = (std::filesystem::current_path().std::filesystem::path::parent_path()).string();
 
 float rectangleVertices[] =
@@ -62,7 +65,7 @@ int main()
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
 
-    unsigned int rectVAO, rectVBO;
+	unsigned int rectVAO, rectVBO;
 	glGenVertexArrays(1, &rectVAO);
 	glGenBuffers(1, &rectVBO);
 	glBindVertexArray(rectVAO);
@@ -82,7 +85,7 @@ int main()
     unsigned int framebufferTexture;
     glGenTextures(1, &framebufferTexture);
     glBindTexture(GL_TEXTURE_2D, framebufferTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, fbWidth, fbHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -92,7 +95,7 @@ int main()
     unsigned int RBO;
     glGenRenderbuffers(1, &RBO);
     glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, fbWidth, fbHeight);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
 
     auto FBOStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -110,6 +113,7 @@ int main()
         GLCInput.processInput();
 
         glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+        glViewport(0, 0, fbWidth, fbHeight);
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -123,10 +127,13 @@ int main()
 
         Terrain.Draw(terrainShader ,MainCamera, Character.Transform);
 
+        framebufferProgram.Use();
+
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, width, height);
         glBindVertexArray(rectVAO);
 		glDisable(GL_DEPTH_TEST);
-		glBindTexture(GL_TEXTURE_2D, framebufferTexture);
+        glBindTexture(GL_TEXTURE_2D, framebufferTexture);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glfwSwapBuffers(GLC.window);
