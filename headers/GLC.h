@@ -17,6 +17,7 @@
 #include <GLCInput.h>
 #include <GLCModel.h>
 #include <GLCTerrain.h>
+#include <GLCFramebuffer.h>
 
 class GLC 
 {
